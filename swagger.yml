@@ -223,9 +223,12 @@ definitions:
       clanPoints:
         type: integer
   PlayerRankingList:
-    type: array
-    items:
-      $ref: '#/definitions/PlayerRanking'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/PlayerRanking'
   PlayerRanking:
     type: object
     properties:
@@ -270,18 +273,24 @@ definitions:
     items:
       $ref: '#/definitions/Location'
   LeagueSeasonList:
-    type: array
-    items:
-      $ref: '#/definitions/LeagueSeason'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/LeagueSeason'
   LeagueSeason:
     type: object
     properties:
       id:
         type: string
   LeagueList:
-    type: array
-    items:
-      $ref: '#/definitions/League'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/League'
   ClanWarLog:
     type: object
     properties:
