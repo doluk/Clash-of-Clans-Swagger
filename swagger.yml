@@ -286,6 +286,8 @@ definitions:
         $ref: '#/definitions/WarClan'
       endTime:
         type: string
+        format: date-time
+        #pattern: yyyyMMdd'T'HHmmss.fff'Z'
       result:
         type: string
   WarClan:
@@ -638,12 +640,18 @@ definitions:
         $ref: '#/definitions/WarClan'
       startTime:
         type: string
+        format: date-time
+        #pattern: yyyyMMdd'T'HHmmss.fff'Z'
       state:
         type: string
       endTime:
         type: string
+        format: date-time
+        #pattern: yyyyMMdd'T'HHmmss.fff'Z'
       preparationStartTime:
         type: string
+        format: date-time
+        #pattern: yyyyMMdd'T'HHmmss.fff'Z'
   ClientError:
     type: object
     properties:
