@@ -958,7 +958,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/ClanWarLeagueGroup'
+            $ref: '#/definitions/ClanWar'
   /leagues/{leagueId}:
     get:
       summary: Get league information
