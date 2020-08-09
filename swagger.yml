@@ -141,6 +141,13 @@ definitions:
         type: integer
       iconUrls:
         type: object
+        properties:
+          tiny:
+            type: string
+          small:
+            type: string
+          medium:
+            type: string
   ClanMemberList:
     type: array
     items:
@@ -179,6 +186,13 @@ definitions:
         type: integer
       iconUrls:
         type: object
+        properties:
+          tiny:
+            type: string
+          small:
+            type: string
+          medium:
+            type: string
   ClanVersusRankingList:
     type: array
     items:
