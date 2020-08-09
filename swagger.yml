@@ -283,9 +283,12 @@ definitions:
     items:
       $ref: '#/definitions/League'
   ClanWarLog:
-    type: array
-    items:
-      $ref: '#/definitions/ClanWarLogEntry'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/ClanWarLogEntry'
   ClanWarLogEntry:
     type: object
     properties:
