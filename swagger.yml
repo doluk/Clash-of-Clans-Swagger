@@ -269,9 +269,12 @@ definitions:
           large: 
             type: string
   LocationList:
-    type: array
-    items:
-      $ref: '#/definitions/Location'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/Location'
   LeagueSeasonList:
     type: object
     properties:
