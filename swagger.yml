@@ -146,6 +146,13 @@ definitions:
         type: boolean
       countryCode:
         type: string
+  LabelsObject:
+    type: object
+    properties: 
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/Label'
   LabelList:
     type: array
     items:
@@ -1341,7 +1348,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/LabelList'
+            $ref: '#/definitions/LabelsObject'
   /warleagues/{leagueId}:
     get:
       summary: Get war league information
@@ -1557,7 +1564,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/LabelList'
+            $ref: '#/definitions/LabelsObject'
   /clans:
     get:
       summary: Search clans
