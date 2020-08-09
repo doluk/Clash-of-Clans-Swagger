@@ -89,6 +89,13 @@ definitions:
         type: boolean
       warFrequency:
         type: string
+        enum:
+          - unknown
+          - never
+          - lessThanOncePerWeek
+          - oncePerWeek
+          - moreThanOncePerWeek
+          - always
       clanLevel:
         type: integer
       warWinStreak:
@@ -109,6 +116,10 @@ definitions:
         $ref: '#/definitions/Location'
       type:
         type: string
+        enum:
+          - InviteOnly
+          - Closed
+          - Open
       members:
         type: integer
       description:
@@ -290,6 +301,12 @@ definitions:
         #pattern: yyyyMMdd'T'HHmmss.fff'Z'
       result:
         type: string
+        nullable: true
+        enum: 
+          - null
+          - lose
+          - tie
+          - win  
   WarClan:
     type: object
     properties:
@@ -365,6 +382,10 @@ definitions:
         type: string
       state:
         type: string
+        enum:
+          - preparation
+          - inWar
+          - ended
       season:
         type: string
         #format: date
@@ -489,6 +510,13 @@ definitions:
         $ref: '#/definitions/League'
       role:
         type: string
+        nullable: true
+        enum:
+          - null
+          - member
+          - admin
+          - coLeader
+          - leader
       attackWins:
         type: integer
       defenseWins:
@@ -644,6 +672,11 @@ definitions:
         #pattern: yyyyMMdd'T'HHmmss.fff'Z'
       state:
         type: string
+        enum:
+          - notInWar
+          - preparation
+          - inWar
+          - warEnded 
       endTime:
         type: string
         format: date-time
