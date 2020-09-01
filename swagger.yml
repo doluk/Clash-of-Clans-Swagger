@@ -188,6 +188,13 @@ definitions:
         type: string
       role:
         type: string
+        nullable: true
+        enum: 
+          - null
+          - member
+          - admin
+          - coLeader
+          - leader        
       expLevel:
         type: integer
       clanRank:
@@ -533,7 +540,7 @@ definitions:
       role:
         type: string
         nullable: true
-        enum:
+        enum: 
           - null
           - member
           - admin
