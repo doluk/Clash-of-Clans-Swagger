@@ -67,7 +67,7 @@ definitions:
       id:
         type: integer
   JsonLocalizedName:
-    type: object
+    type: string
   ClanList:
     type: array
     items:
@@ -319,11 +319,11 @@ definitions:
     type: object
     properties:
       clan:
-        $ref: '#/definitions/WarClan'
+        $ref: '#/definitions/WarClanLogEntry'
       teamSize:
         type: integer
       opponent:
-        $ref: '#/definitions/WarClan'
+        $ref: '#/definitions/WarClanLogEntry'
       endTime:
         type: string
         format: date-time
@@ -336,11 +336,39 @@ definitions:
           - lose
           - tie
           - win  
+  WarClanLogEntry:
+    type: object
+    properties:
+      destructionPercentage:
+        type: number
+        format: float
+      tag:
+        type: string
+      name:
+        type: string
+      badgeUrls:
+        type: object
+        properties:
+          small:
+            type: string
+          medium:
+            type: string
+          large: 
+            type: string
+      clanLevel:
+        type: integer
+      attacks:
+        type: integer
+      stars:
+        type: integer
+      expEarned:
+        type: integer
   WarClan:
     type: object
     properties:
       destructionPercentage:
-        $ref: '#/definitions/Float'
+        type: number
+        format: float
       tag:
         type: string
       name:
@@ -387,6 +415,7 @@ definitions:
         $ref: '#/definitions/ClanWarAttackList'
   ClanWarAttackList:
     type: array
+    nullable: true
     items:
       $ref: '#/definitions/ClanWarAttack'
   ClanWarAttack:
@@ -402,8 +431,6 @@ definitions:
         type: integer
       destructionPercentage:
         type: integer
-  Float:
-    type: object
   ClanWarLeagueGroup:
     type: object
     properties:
