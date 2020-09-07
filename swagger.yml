@@ -69,9 +69,12 @@ definitions:
   JsonLocalizedName:
     type: string
   ClanList:
-    type: array
-    items:
-      $ref: '#/definitions/Clan'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/Clan'        
   Clan:
     type: object
     properties:
