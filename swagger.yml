@@ -229,9 +229,12 @@ definitions:
           medium:
             type: string
   ClanVersusRankingList:
-    type: array
-    items:
-      $ref: '#/definitions/ClanVersusRanking'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/ClanVersusRanking'
   ClanVersusRanking:
     type: object
     properties:
@@ -506,9 +509,12 @@ definitions:
       name:
         type: string
   ClanRankingList:
-    type: array
-    items:
-      $ref: '#/definitions/ClanRanking'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/ClanRanking'
   ClanRanking:
     type: object
     properties:
@@ -538,9 +544,12 @@ definitions:
           large: 
             type: string
   PlayerVersusRankingList:
-    type: array
-    items:
-      $ref: '#/definitions/PlayerVersusRanking'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/PlayerVersusRanking'
   PlayerVersusRanking:
     type: object
     properties:
