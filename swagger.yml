@@ -56,9 +56,12 @@ responses:
       $ref: '#/definitions/ClientError'
 definitions:
   WarLeagueList:
-    type: array
-    items:
-      $ref: '#/definitions/WarLeague'
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/WarLeague'
   WarLeague:
     type: object
     properties:
