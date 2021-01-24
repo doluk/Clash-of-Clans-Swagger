@@ -727,7 +727,7 @@ definitions:
       token:
         type: string
       status:
-        type: string
+        type: string       
   ClanWar:
     type: object
     properties:
@@ -862,6 +862,45 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/Clan'
+  /players/{playerTag}/verifytoken:
+    post:
+      summary: Verify player API token that can be found from the game settings.
+      description: |
+        Verify player API token that can be found from the game settings. This API call can be used to check that players own the game accounts they claim to own as they need to provide the one-time use API token that exists inside the game.
+      operationId: verifyToken
+      tags:
+        - players
+      parameters:
+        -
+          name: playerTag
+          in: path
+          description: Tag of the player.
+          required: true
+          type: string
+        -
+          name: body
+          in: body
+          description: Request body
+          required: true
+          schema:
+            $ref: '#/definitions/VerifyTokenRequest'
+      responses:
+        '400':
+          $ref: '#/responses/BadRequestSpec'
+        '403':
+          $ref: '#/responses/ForbiddenSpec'
+        '404':
+          $ref: '#/responses/NotFoundSpec'
+        '429':
+          $ref: '#/responses/RequestThrottledSpec'
+        '500':
+          $ref: '#/responses/UnknownExceptionSpec'
+        '503':
+          $ref: '#/responses/InMaintenanceSpec'
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/VerifyTokenResponse'
   /players/{playerTag}:
     get:
       summary: Get player information
