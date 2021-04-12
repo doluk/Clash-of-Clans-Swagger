@@ -733,8 +733,6 @@ definitions:
     properties:
       clan:
         $ref: '#/definitions/WarClan'
-      teamSize:
-        type: integer
       opponent:
         $ref: '#/definitions/WarClan'
       startTime:
