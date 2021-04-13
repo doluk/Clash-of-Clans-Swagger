@@ -1125,6 +1125,30 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/League'
+  /goldpass/seasons/current:
+    get:
+      summary: Get information about the current gold pass season.
+      description: Get information about the current gold pass season.
+      operationId: getCurrentGoldPassSeason
+      tags:
+        - goldpass
+      responses:
+        '400':
+          $ref: '#/responses/BadRequestSpec'
+        '403':
+          $ref: '#/responses/ForbiddenSpec'
+        '404':
+          $ref: '#/responses/NotFoundSpec'
+        '429':
+          $ref: '#/responses/RequestThrottledSpec'
+        '500':
+          $ref: '#/responses/UnknownExceptionSpec'
+        '503':
+          $ref: '#/responses/InMaintenanceSpec'
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/GoldPassSeason'
   /clans/{clanTag}/warlog:
     get:
       summary: Retrieve clan's clan war log
