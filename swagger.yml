@@ -27,6 +27,12 @@ tags:
   -
     name: locations
     description: Access global and local rankings
+  -
+    name: goldpass
+    description: Access information about gold pass
+  -
+    name: esports
+    description: Esports related APIs
 responses:
   InMaintenanceSpec:
     description: Service is temprorarily unavailable because of maintenance.
@@ -114,6 +120,9 @@ definitions:
         type: integer
       clanPoints:
         type: integer
+      chatLanguage:
+        $ref: '#/definitions/Language'
+        nullable: true
       labels:
         $ref: '#/definitions/LabelList'
       name:
@@ -139,6 +148,15 @@ definitions:
             type: string
           large: 
             type: string
+  Language:
+    type: object
+    properties:
+      name:
+        type: string
+      id:
+        type: integer
+      languageCode:
+        type: string
   Location:
     type: object
     properties:
@@ -345,6 +363,13 @@ definitions:
           - lose
           - tie
           - win  
+  GoldPassSeason:
+    type: object
+    properties:
+      startTime:
+        type: string
+      endTime:
+        type: string
   WarClanLogEntry:
     type: object
     properties:
@@ -439,6 +464,8 @@ definitions:
       stars:
         type: integer
       destructionPercentage:
+        type: integer
+      duration:
         type: integer
   ClanWarLeagueGroup:
     type: object
@@ -669,7 +696,10 @@ definitions:
       maxLevel:
         type: integer
       village:
-        type: string
+        type: string      
+      superTroopIsActive:
+        type: boolean
+        nullable: true
   PlayerLegendStatistics:
     type: object
     properties:
