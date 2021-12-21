@@ -83,7 +83,7 @@ definitions:
       items:
         type: array
         items:
-          $ref: '#/definitions/Clan'        
+          $ref: '#/definitions/Clan'
   Clan:
     type: object
     properties:
@@ -615,6 +615,12 @@ definitions:
           - admin
           - coLeader
           - leader
+      warPreference:
+        type: string
+        enum:
+          - null
+          - in
+          - out
       attackWins:
         type: integer
       defenseWins:
@@ -1853,5 +1859,4 @@ securityDefinitions:
     name: authorization
     in: header
 security:
-  -
-    JWT: []
+  - JWT: [read, write]
