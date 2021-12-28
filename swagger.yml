@@ -349,6 +349,8 @@ definitions:
         $ref: '#/definitions/WarClanLogEntry'
       teamSize:
         type: integer
+      attacksPerMember:
+        type: integer
       opponent:
         $ref: '#/definitions/WarClanLogEntry'
       endTime:
@@ -763,12 +765,16 @@ definitions:
       token:
         type: string
       status:
-        type: string       
+        type: string
   ClanWar:
     type: object
     properties:
       clan:
         $ref: '#/definitions/WarClan'
+      teamSize:
+        type: integer
+      attacksPerMember:
+        type: integer
       opponent:
         $ref: '#/definitions/WarClan'
       startTime:
