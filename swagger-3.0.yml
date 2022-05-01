@@ -2328,18 +2328,14 @@ components:
           readOnly: true
           type: string
         members:
-          allOf:
-          - $ref: '#/components/schemas/ClanWarLeagueClanMemberList'
+          type: array
           readOnly: true
+          items:
+            $ref: '#/components/schemas/ClanWarLeagueClanMember'
         badgeUrls:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
-    ClanWarLeagueClanMemberList:
-      type: array
-      items:
-          readOnly: true
-      $ref: '#/components/schemas/ClanWarLeagueClanMember'
     ClanWarLeagueClanMember:
       type: object
       properties:
