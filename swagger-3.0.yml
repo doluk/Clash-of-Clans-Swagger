@@ -1,0 +1,2756 @@
+openapi: 3.0.1
+info:
+  title: Clash of Clans API
+  description: |
+    Check out <a href="https://developer.clashofclans.com/#/getting-started" target="_parent">Getting Started</a> for instructions and links to other resources. Clash of Clans API uses <a href="https://jwt.io/" target="_blank">JSON Web Tokens</a> for authorizing the requests. Tokens are created by developers on <a href="https://developer.clashofclans.com/#/account" target="_parent">My Account</a> page and must be passed in every API request in Authorization HTTP header using Bearer authentication scheme. Correct Authorization header looks like this: "Authorization: Bearer API_TOKEN".
+  termsOfService: http://supercell.com/en/terms-of-service/
+  version: v1
+servers:
+- url: https://api.clashofclans.com/v1
+- url: http://api.clashofclans.com/v1
+security:
+- JWT: []
+tags:
+- name: clans
+  description: Access clan specific information
+- name: players
+  description: Access player specific information
+- name: leagues
+  description: Access league information
+- name: locations
+  description: Access global and local rankings
+- name: goldpass
+  description: Access information about gold pass
+- name: esports
+  description: Esports related APIs
+paths:
+  /clans/{clanTag}/currentwar:
+    get:
+      tags:
+      - clans
+      summary: Retrieve information about clan's current clan war
+      description: Retrieve information about clan's current clan war
+      operationId: getCurrentWar
+      parameters:
+      - name: clanTag
+        in: path
+        description: Tag of the clan.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClanWar'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /clans/{clanTag}/currentwar/leaguegroup:
+    get:
+      tags:
+      - clans
+      summary: Retrieve information about clan's current clan war league group
+      description: Retrieve information about clan's current clan war league group
+      operationId: getClanWarLeagueGroup
+      parameters:
+      - name: clanTag
+        in: path
+        description: Tag of the clan.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClanWarLeagueGroup'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /clans/{clanTag}:
+    get:
+      tags:
+      - clans
+      summary: Get clan information
+      description: |
+        Get information about a single clan by clan tag. Clan tags can be found using clan search operation. Note that clan tags start with hash character '#' and that needs to be URL-encoded properly to work in URL, so for example clan tag '#2ABC' would become '%232ABC' in the URL.
+      operationId: getClan
+      parameters:
+      - name: clanTag
+        in: path
+        description: Tag of the clan.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clan'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /players/{playerTag}/verifytoken:
+    post:
+      tags:
+      - players
+      summary: Verify player API token that can be found from the game settings.
+      description: |
+        Verify player API token that can be found from the game settings. This API call can be used to check that players own the game accounts they claim to own as they need to provide the one-time use API token that exists inside the game.
+      operationId: verifyToken
+      parameters:
+      - name: playerTag
+        in: path
+        description: Tag of the player.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyTokenRequest'
+        required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyTokenResponse'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+      x-codegen-request-body-name: body
+  /players/{playerTag}:
+    get:
+      tags:
+      - players
+      summary: Get player information
+      description: |
+        Get information about a single player by player tag. Player tags can be found either in game or by from clan member lists. Note that player tags start with hash character '#' and that needs to be URL-encoded properly to work in URL, so for example player tag '#2ABC' would become '%232ABC' in the URL.
+      operationId: getPlayer
+      parameters:
+      - name: playerTag
+        in: path
+        description: Tag of the player.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /locations/{locationId}/rankings/players-versus:
+    get:
+      tags:
+      - locations
+      summary: Get player versus rankings for a specific location
+      description: Get player versus rankings for a specific location
+      operationId: getPlayerVersusRanking
+      parameters:
+      - name: locationId
+        in: path
+        description: Identifier of the location to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerVersusRankingList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /locations/{locationId}/rankings/clans:
+    get:
+      tags:
+      - locations
+      summary: Get clan rankings for a specific location
+      description: Get clan rankings for a specific location
+      operationId: getClanRanking
+      parameters:
+      - name: locationId
+        in: path
+        description: Identifier of the location to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClanRankingList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /clanwarleagues/wars/{warTag}:
+    get:
+      tags:
+      - clans
+      summary: Retrieve information about individual clan war league war
+      description: Retrieve information about individual clan war league war
+      operationId: getClanWarLeagueWar
+      parameters:
+      - name: warTag
+        in: path
+        description: Tag of the war.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClanWar'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /leagues/{leagueId}:
+    get:
+      tags:
+      - leagues
+      summary: Get league information
+      description: Get league information
+      operationId: getLeague
+      parameters:
+      - name: leagueId
+        in: path
+        description: Identifier of the league.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/League'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /goldpass/seasons/current:
+    get:
+      tags:
+      - goldpass
+      summary: Get information about the current gold pass season.
+      description: Get information about the current gold pass season.
+      operationId: getCurrentGoldPassSeason
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoldPassSeason'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /clans/{clanTag}/warlog:
+    get:
+      tags:
+      - clans
+      summary: Retrieve clan's clan war log
+      description: Retrieve clan's clan war log
+      operationId: getClanWarLog
+      parameters:
+      - name: clanTag
+        in: path
+        description: Tag of the clan.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClanWarLog'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /leagues:
+    get:
+      tags:
+      - leagues
+      summary: List leagues
+      description: List leagues
+      operationId: getLeagues
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeagueList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /leagues/{leagueId}/seasons:
+    get:
+      tags:
+      - leagues
+      summary: Get league seasons
+      description: |
+        Get league seasons. Note that league season information is available only for Legend League.
+      operationId: getLeagueSeasons
+      parameters:
+      - name: leagueId
+        in: path
+        description: Identifier of the league.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeagueSeasonList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /locations/{locationId}/rankings/players:
+    get:
+      tags:
+      - locations
+      summary: Get player rankings for a specific location
+      description: Get player rankings for a specific location
+      operationId: getPlayerRanking
+      parameters:
+      - name: locationId
+        in: path
+        description: Identifier of the location to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerRankingList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /clans/{clanTag}/members:
+    get:
+      tags:
+      - clans
+      summary: List clan members
+      description: List clan members.
+      operationId: getClanMembers
+      parameters:
+      - name: clanTag
+        in: path
+        description: Tag of the clan.
+        required: true
+        schema:
+          type: string
+          nullable: false
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClanMemberList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /locations:
+    get:
+      tags:
+      - locations
+      summary: List locations
+      description: List locations
+      operationId: getLocations
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /labels/players:
+    get:
+      tags:
+      - labels
+      summary: List player labels
+      description: List player labels
+      operationId: getPlayerLabels
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelsObject'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /warleagues/{leagueId}:
+    get:
+      tags:
+      - leagues
+      summary: Get war league information
+      description: Get war league information
+      operationId: getWarLeague
+      parameters:
+      - name: leagueId
+        in: path
+        description: Identifier of the league.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WarLeague'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /leagues/{leagueId}/seasons/{seasonId}:
+    get:
+      tags:
+      - leagues
+      summary: Get league season rankings
+      description: |
+        Get league season rankings. Note that league season information is available only for Legend League.
+      operationId: getLeagueSeasonRankings
+      parameters:
+      - name: leagueId
+        in: path
+        description: Identifier of the league.
+        required: true
+        schema:
+          type: string
+      - name: seasonId
+        in: path
+        description: Identifier of the season.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerRankingList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /locations/{locationId}:
+    get:
+      tags:
+      - locations
+      summary: Get location information
+      description: Get information about specific location
+      operationId: getLocation
+      parameters:
+      - name: locationId
+        in: path
+        description: Identifier of the location to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /locations/{locationId}/rankings/clans-versus:
+    get:
+      tags:
+      - locations
+      summary: Get clan versus rankings for a specific location
+      description: Get clan versus rankings for a specific location
+      operationId: getClanVersusRanking
+      parameters:
+      - name: locationId
+        in: path
+        description: Identifier of the location to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClanVersusRankingList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /labels/clans:
+    get:
+      tags:
+      - labels
+      summary: List clan labels
+      description: List clan labels
+      operationId: getClanLabels
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelsObject'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /clans:
+    get:
+      tags:
+      - clans
+      summary: Search clans
+      description: |
+        Search all clans by name and/or filtering the results using various criteria. At least one filtering criteria must be defined and if name is used as part of search, it is required to be at least three characters long. It is not possible to specify ordering for results so clients should not rely on any specific ordering as that may change in the future releases of the API.
+      operationId: searchClans
+      parameters:
+      - name: name
+        in: query
+        description: |
+          Search clans by name. If name is used as part of search query, it needs to be at least three characters long. Name search parameter is interpreted as wild card search, so it may appear anywhere in the clan name.
+        schema:
+          type: string
+      - name: warFrequency
+        in: query
+        description: Filter by clan war frequency
+        schema:
+          type: string
+      - name: locationId
+        in: query
+        description: |
+          Filter by clan location identifier. For list of available locations, refer to getLocations operation.
+        schema:
+          type: integer
+      - name: minMembers
+        in: query
+        description: Filter by minimum number of clan members
+        schema:
+          type: integer
+      - name: maxMembers
+        in: query
+        description: Filter by maximum number of clan members
+        schema:
+          type: integer
+      - name: minClanPoints
+        in: query
+        description: Filter by minimum amount of clan points.
+        schema:
+          type: integer
+      - name: minClanLevel
+        in: query
+        description: Filter by minimum clan level.
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: labelIds
+        in: query
+        description: Comma separatered list of label IDs to use for filtering results.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClanList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /warleagues:
+    get:
+      tags:
+      - leagues
+      summary: List war leagues
+      description: List war leagues
+      operationId: getWarLeagues
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WarLeagueList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+components:
+  schemas:
+    BadgeUrls:
+      required:
+      - large
+      - medium
+      - small
+      type: object
+      properties:
+        small:
+          type: string
+          readOnly: true
+        medium:
+          type: string
+          readOnly: true
+        large:
+          type: string
+          readOnly: true
+    GroupState:
+      type: string
+      enum:
+      - preparation
+      - inWar
+      - ended
+    IconUrls:
+      type: object
+      properties:
+        small:
+          nullable: true
+          type: string
+          readOnly: true
+        medium:
+          nullable: true
+          type: string
+          readOnly: true
+        tiny:
+          nullable: true
+          type: string
+          readOnly: true
+    RecruitingType:
+      type: string
+      enum:
+      - inviteOnly
+      - closed
+      - open
+    Role:
+      type: string
+      enum:
+      - member
+      - admin
+      - coLeader
+      - leader
+    Result:
+      type: string
+      enum:
+      - lose
+      - tie
+      - win
+    WarFrequency:
+      type: string
+      enum:
+      - unknown
+      - never
+      - lessThenOncePerWeek
+      - oncePerWeek
+      - moreThanOncePerWeek
+      - always
+    WarPreference:
+      type: string
+      enum:
+      - out
+      - in
+    WarState:
+      type: string
+      enum:
+      - notInWar
+      - preparation
+      - inWar
+      - warEnded
+    WarType:
+      type: string
+      enum:
+      - unknown
+      - random
+      - friendly
+      - sccwl
+    WarLeagueList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WarLeague'
+          readOnly: true
+    WarLeague:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/JsonLocalizedName'
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+    JsonLocalizedName:
+      type: string
+      readOnly: true
+    ClanList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Clan'
+          readOnly: true
+    Clan:
+      type: object
+      properties:
+        warLeague:
+          allOf:
+          - $ref: '#/components/schemas/WarLeague'
+          readOnly: true
+        memberList:
+          allOf:
+          - $ref: '#/components/schemas/ClanMemberList'
+          readOnly: true
+        requiredTrophies:
+          type: integer
+          readOnly: true
+        clanVersusPoints:
+          type: integer
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        isWarLogPublic:
+          type: boolean
+          readOnly: true
+        warFrequency:
+          nullable: true
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/WarFrequency'
+        clanLevel:
+          type: integer
+          readOnly: true
+        warWinStreak:
+          type: integer
+          readOnly: true
+        warWins:
+          type: integer
+          readOnly: true
+        warTies:
+          type: integer
+          readOnly: true
+        warLosses:
+          type: integer
+          readOnly: true
+        clanPoints:
+          type: integer
+          readOnly: true
+        chatLanguage:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Language'
+          readOnly: true
+        labels:
+          allOf:
+          - $ref: '#/components/schemas/LabelList'
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        location:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Location'
+          readOnly: true
+        type:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/RecruitingType'
+          readOnly: true
+        members:
+          type: integer
+          readOnly: true
+        description:
+          type: string
+          readOnly: true
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+    Language:
+      type: object
+      properties:
+        name:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+        languageCode:
+          type: string
+          readOnly: true
+    Location:
+      type: object
+      properties:
+        localizedName:
+          nullable: true
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        isCountry:
+          type: boolean
+          readOnly: true
+        countryCode:
+          nullable: true
+          type: string
+          readOnly: true
+    LabelsObject:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+          readOnly: true
+    LabelList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Label'
+    Label:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/JsonLocalizedName'
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+        iconUrls:
+          allOf:
+          - $ref: '#/components/schemas/IconUrls'
+          readOnly: true
+    ClanMemberList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanMember'
+    ClanMember:
+      type: object
+      properties:
+        league:
+          allOf:
+          - $ref: '#/components/schemas/League'
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        role:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Role'
+          readOnly: true
+        expLevel:
+          type: integer
+          readOnly: true
+        clanRank:
+          type: integer
+          readOnly: true
+        previousClanRank:
+          type: integer
+          readOnly: true
+        donations:
+          type: integer
+          readOnly: true
+        donationsReceived:
+          type: integer
+          readOnly: true
+        trophies:
+          type: integer
+          readOnly: true
+        versusTrophies:
+          type: integer
+          readOnly: true
+    League:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/JsonLocalizedName'
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+        iconUrls:
+          allOf:
+          - $ref: '#/components/schemas/IconUrls'
+          readOnly: true
+    ClanVersusRankingList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClanVersusRanking'
+          readOnly: true
+    ClanVersusRanking:
+      type: object
+      properties:
+        clanVersusPoints:
+          type: integer
+          readOnly: true
+        clanPoints:
+          type: integer
+          readOnly: true
+    PlayerRankingList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerRanking'
+          readOnly: true
+    PlayerRanking:
+      type: object
+      properties:
+        clan:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/PlayerRankingClan'
+          readOnly: true
+        league:
+          allOf:
+          - $ref: '#/components/schemas/League'
+          readOnly: true
+        attackWins:
+          type: integer
+          readOnly: true
+        defenseWins:
+          type: integer
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        expLevel:
+          type: integer
+          readOnly: true
+        rank:
+          type: integer
+          readOnly: true
+        previousRank:
+          type: integer
+          readOnly: true
+        trophies:
+          type: integer
+          readOnly: true
+    PlayerRankingClan:
+      type: object
+      properties:
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+    LocationList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+          readOnly: true
+    LeagueSeasonList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeagueSeason'
+          readOnly: true
+    LeagueSeason:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+    LeagueList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/League'
+          readOnly: true
+    ClanWarLog:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClanWarLogEntry'
+          readOnly: true
+    ClanWarLogEntry:
+      type: object
+      properties:
+        clan:
+          allOf:
+          - $ref: '#/components/schemas/WarClanLogEntry'
+          readOnly: true
+        teamSize:
+          type: integer
+          readOnly: true
+        attacksPerMember:
+          type: integer
+          readOnly: true
+        opponent:
+          allOf:
+          - $ref: '#/components/schemas/WarClanLogEntry'
+          readOnly: true
+        endTime:
+          type: string
+          format: date-time
+          readOnly: true
+        result:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Result'
+          readOnly: true
+    GoldPassSeason:
+      type: object
+      properties:
+        startTime:
+          type: string
+          readOnly: true
+        endTime:
+          type: string
+          readOnly: true
+    WarClanLogEntry:
+      type: object
+      properties:
+        destructionPercentage:
+          type: number
+          format: float
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+        clanLevel:
+          type: integer
+          readOnly: true
+        attacks:
+          type: integer
+          readOnly: true
+        stars:
+          type: integer
+          readOnly: true
+        expEarned:
+          type: integer
+          readOnly: true
+    WarClan:
+      type: object
+      properties:
+        destructionPercentage:
+          type: number
+          format: float
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+        clanLevel:
+          type: integer
+          readOnly: true
+        attacks:
+          type: integer
+          readOnly: true
+        stars:
+          type: integer
+          readOnly: true
+        expEarned:
+          type: integer
+          readOnly: true
+        members:
+          $ref: '#/components/schemas/ClanWarMemberList'
+          readOnly: true
+    ClanWarMemberList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanWarMember'
+      readOnly: true
+    ClanWarMember:
+      type: object
+      properties:
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        mapPosition:
+          type: integer
+          readOnly: true
+        townhallLevel:
+          type: integer
+          readOnly: true
+        opponentAttacks:
+          type: integer
+          readOnly: true
+        bestOpponentAttack:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/ClanWarAttack'
+          readOnly: true
+        attacks:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/ClanWarAttackList'
+          readOnly: true
+    ClanWarAttackList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanWarAttack'
+      readOnly: true
+    ClanWarAttack:
+      type: object
+      properties:
+        order:
+          type: integer
+          readOnly: true
+        attackerTag:
+          type: string
+          readOnly: true
+        defenderTag:
+          type: string
+          readOnly: true
+        stars:
+          type: integer
+          readOnly: true
+        destructionPercentage:
+          type: integer
+          format: float
+          readOnly: true
+        duration:
+          type: integer
+          readOnly: true
+    ClanWarLeagueGroup:
+      type: object
+      properties:
+        state:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/GroupState'
+          readOnly: true
+        season:
+          type: string
+          format: date-time
+          readOnly: true
+        clans:
+          $ref: '#/components/schemas/ClanWarLeagueClanList'
+          readOnly: true
+        rounds:
+          $ref: '#/components/schemas/ClanWarLeagueRoundList'
+          readOnly: true
+    ClanWarLeagueRoundList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanWarLeagueRound'
+      readOnly: true
+    ClanWarLeagueRound:
+      type: object
+      properties:
+        warTags:
+          $ref: '#/components/schemas/StringList'
+      readOnly: true
+    StringList:
+      type: array
+      items:
+        type: string
+      readOnly: true
+    String:
+      type: object
+      readOnly: true
+    ClanWarLeagueClanList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanWarLeagueClan'
+      readOnly: true
+    ClanWarLeagueClan:
+      type: object
+      properties:
+        tag:
+          readOnly: true
+          type: string
+        clanLevel:
+          readOnly: true
+          type: integer
+        name:
+          readOnly: true
+          type: string
+        members:
+          allOf:
+          - $ref: '#/components/schemas/ClanWarLeagueClanMemberList'
+          readOnly: true
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+    ClanWarLeagueClanMemberList:
+      type: array
+      items:
+          readOnly: true
+      $ref: '#/components/schemas/ClanWarLeagueClanMember'
+    ClanWarLeagueClanMember:
+      type: object
+      properties:
+        tag:
+          readOnly: true
+          type: string
+        townHallLevel:
+          readOnly: true
+          type: integer
+        name:
+          readOnly: true
+          type: string
+    ClanRankingList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClanRanking'
+          readOnly: true
+    ClanRanking:
+      type: object
+      properties:
+        clanLevel:
+          type: integer
+          readOnly: true
+        clanPoints:
+          type: integer
+          readOnly: true
+        location:
+          allOf:
+          - $ref: '#/components/schemas/Location'
+          readOnly: true
+        members:
+          type: integer
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        rank:
+          type: integer
+          readOnly: true
+        previousRank:
+          type: integer
+          readOnly: true
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+    PlayerVersusRankingList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerVersusRanking'
+          readOnly: true
+    PlayerVersusRanking:
+      type: object
+      properties:
+        clan:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/PlayerRankingClan'
+          readOnly: true
+        versusBattleWins:
+          type: integer
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        expLevel:
+          type: integer
+          readOnly: true
+        rank:
+          type: integer
+          readOnly: true
+        previousRank:
+          type: integer
+          readOnly: true
+        versusTrophies:
+          type: integer
+          readOnly: true
+    Player:
+      type: object
+      properties:
+        clan:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/PlayerClan'
+          readOnly: true
+        league:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/League'
+          readOnly: true
+        role:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Role'
+          readOnly: true
+        warPreference:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/WarPreference'
+          readOnly: true
+        attackWins:
+          type: integer
+          readOnly: true
+        defenseWins:
+          type: integer
+          readOnly: true
+        townHallLevel:
+          type: integer
+          readOnly: true
+        townHallWeaponLevel:
+          type: integer
+          readOnly: true
+        versusBattleWins:
+          type: integer
+          readOnly: true
+        legendStatistics:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/PlayerLegendStatistics'
+          readOnly: true
+        troops:
+          allOf:
+          - $ref: '#/components/schemas/PlayerItemLevelList'
+          readOnly: true
+        heroes:
+          allOf:
+          - $ref: '#/components/schemas/PlayerItemLevelList'
+          readOnly: true
+        spells:
+          allOf:
+          - $ref: '#/components/schemas/PlayerItemLevelList'
+          readOnly: true
+        labels:
+          allOf:
+          - $ref: '#/components/schemas/LabelList'
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        expLevel:
+          type: integer
+          readOnly: true
+        trophies:
+          type: integer
+          readOnly: true
+        bestTrophies:
+          type: integer
+          readOnly: true
+        donations:
+          type: integer
+          readOnly: true
+        donationsReceived:
+          type: integer
+          readOnly: true
+        builderHallLevel:
+          type: integer
+          readOnly: true
+        versusTrophies:
+          type: integer
+          readOnly: true
+        bestVersusTrophies:
+          type: integer
+          readOnly: true
+        warStars:
+          type: integer
+          readOnly: true
+        achievements:
+          allOf:
+          - $ref: '#/components/schemas/PlayerAchievementProgressList'
+          readOnly: true
+        versusBattleWinCount:
+          type: integer
+          readOnly: true
+    PlayerAchievementProgressList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PlayerAchievementProgress'
+        readOnly: true
+    PlayerAchievementProgress:
+      type: object
+      properties:
+        stars:
+          type: integer
+          readOnly: true
+        value:
+          type: integer
+          readOnly: true
+        name:
+          $ref: '#/components/schemas/JsonLocalizedName'
+          readOnly: true
+        target:
+          type: integer
+          readOnly: true
+        info:
+          $ref: '#/components/schemas/JsonLocalizedName'
+          readOnly: true
+        completionInfo:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/JsonLocalizedName'
+          readOnly: true
+        village:
+          type: string
+          readOnly: true
+    PlayerItemLevelList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PlayerItemLevel'
+        readOnly: true
+    PlayerItemLevel:
+      type: object
+      properties:
+        level:
+          type: integer
+          readOnly: true
+        name:
+          $ref: '#/components/schemas/JsonLocalizedName'
+          readOnly: true
+        maxLevel:
+          type: integer
+          readOnly: true
+        village:
+          type: string
+          readOnly: true
+        superTroopIsActive:
+          type: boolean
+          nullable: true
+          readOnly: true
+    PlayerLegendStatistics:
+      type: object
+      properties:
+        currentSeason:
+          allOf:
+          - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
+          readOnly: true
+        previousVersusSeason:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
+          readOnly: true
+        bestVersusSeason:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
+          readOnly: true
+        legendTrophies:
+          type: integer
+          readOnly: true
+        previousSeason:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
+          readOnly: true
+        bestSeason:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
+          readOnly: true
+    LegendLeagueTournamentSeasonResult:
+      type: object
+      properties:
+        trophies:
+          type: integer
+          readOnly: true
+        id:
+          type: string
+          format: date-time
+          readOnly: true
+        rank:
+          type: integer
+          readOnly: true
+    PlayerClan:
+      type: object
+      properties:
+        tag:
+          type: string
+          readOnly: true
+        clanLevel:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+    VerifyTokenRequest:
+      type: object
+      properties:
+        token:
+          type: string
+    VerifyTokenResponse:
+      type: object
+      properties:
+        tag:
+          type: string
+          readOnly: true
+        token:
+          type: string
+          readOnly: true
+        status:
+          type: string
+          readOnly: true
+    ClanWar:
+      type: object
+      properties:
+        clan:
+          allOf:
+          - $ref: '#/components/schemas/WarClan'
+          readOnly: true
+        teamSize:
+          type: integer
+          readOnly: true
+        attacksPerMember:
+          type: integer
+          readOnly: true
+        opponent:
+          allOf:
+          - $ref: '#/components/schemas/WarClan'
+          readOnly: true
+        startTime:
+          type: string
+          format: date-time
+          readOnly: true
+        state:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/WarState'
+          readOnly: true
+        endTime:
+          type: string
+          format: date-time
+          readOnly: true
+        preparationStartTime:
+          type: string
+          format: date-time
+          readOnly: true
+    ClientError:
+      type: object
+      properties:
+        reason:
+          type: string
+          readOnly: true
+        message:
+          type: string
+          readOnly: true
+        type:
+          type: string
+          readOnly: true
+        detail:
+          type: object
+          properties: {}
+          readOnly: true
+  responses:
+    BadRequestSpec:
+      description: Client provided incorrect parameters for the request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClientError'
+    ForbiddenSpec:
+      description: |
+        Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClientError'
+    InMaintenanceSpec:
+      description: Service is temprorarily unavailable because of maintenance.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClientError'
+    NotFoundSpec:
+      description: Resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClientError'
+    RequestThrottledSpec:
+      description: |
+        Request was throttled, because amount of requests was above the threshold defined for the used API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClientError'
+    UnknownExceptionSpec:
+      description: Unknown error happened when handling the request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClientError'
+  securitySchemes:
+    JWT:
+      type: apiKey
+      description: JSON Web Token used as an API key
+      name: authorization
+      in: header
