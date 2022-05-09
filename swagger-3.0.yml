@@ -1852,9 +1852,11 @@ components:
         warTies:
           type: integer
           readOnly: true
+          nullable: true
         warLosses:
           type: integer
           readOnly: true
+          nullable: true
         clanPoints:
           type: integer
           readOnly: true
@@ -2162,9 +2164,11 @@ components:
         tag:
           type: string
           readOnly: true
+          nullable: true
         name:
           type: string
           readOnly: true
+          nullable: true
         badgeUrls:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
@@ -2181,6 +2185,10 @@ components:
         expEarned:
           type: integer
           readOnly: true
+          nullable: true
+# expEarned, name, tag, 
+
+
     WarClan:
       type: object
       properties:
@@ -2460,6 +2468,7 @@ components:
         townHallWeaponLevel:
           type: integer
           readOnly: true
+          nullable: true
         versusBattleWins:
           type: integer
           readOnly: true
