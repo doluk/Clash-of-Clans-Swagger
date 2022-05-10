@@ -1761,7 +1761,7 @@ components:
       enum:
       - unknown
       - never
-      - lessThenOncePerWeek
+      - lessThanOncePerWeek
       - oncePerWeek
       - moreThanOncePerWeek
       - always
