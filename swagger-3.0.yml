@@ -2374,6 +2374,7 @@ components:
           type: integer
           readOnly: true
         location:
+          nullable: true
           allOf:
           - $ref: '#/components/schemas/Location'
           readOnly: true
