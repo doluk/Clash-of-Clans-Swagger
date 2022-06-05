@@ -23,6 +23,7 @@ tags:
   description: Access information about gold pass
 - name: esports
   description: Esports related APIs
+- name: developer
 paths:
   /clans/{clanTag}/currentwar:
     get:
@@ -1698,6 +1699,246 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClientError'
+  /api/login:
+    servers:
+      - url: https://developer.clashofclans.com/api/login
+    post:
+      security: []
+      tags:
+      - developer
+      summary: Login to the developer portal.
+      operationId: login
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginCredentials'
+        required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /apikey/list:
+    servers:
+      - url: https://developer.clashofclans.com/api/apikey/list
+    post:
+      security:
+        - cookieAuth: []
+      tags:
+      - developer
+      summary: List all tokens.
+      operationId: keys
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyList'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /apikey/revoke:
+    servers:
+      - url: https://developer.clashofclans.com/api/apikey/revoke
+    post:
+      security:
+        - cookieAuth: []
+      tags:
+      - developer
+      summary: Revoke an api token.
+      operationId: revoke
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Key'
+        required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyInstance'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /apikey/create:
+    servers:
+      - url: https://developer.clashofclans.com/api/apikey/create
+    post:
+      security:
+        - cookieAuth: []
+      tags:
+      - developer
+      summary: Create an api token.
+      operationId: create
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTokenRequest'
+        required: true
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyInstance'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
 components:
   schemas:
     BadgeUrls:
@@ -2186,9 +2427,6 @@ components:
           type: integer
           readOnly: true
           nullable: true
-# expEarned, name, tag, 
-
-
     WarClan:
       type: object
       properties:
@@ -2665,6 +2903,99 @@ components:
         status:
           type: string
           readOnly: true
+    LoginCredentials:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        temporaryAPIToken:
+          type: string
+        sessionExpiresInSeconds:
+          type: integer
+    KeyList:
+      type: object
+      properties:
+        status:
+          type: object
+          properties:
+            code:
+              type: integer
+            message:
+              type: string
+            detail:
+              type: string
+              nullable: true
+        sessionExpiresInSeconds:
+          type: integer
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/Key'
+    KeyInstance:
+      type: object
+      properties:
+        status:
+          type: object
+          properties:
+            code:
+              type: integer
+            message:
+              type: string
+            detail:
+              type: string
+              nullable: true
+        sessionExpiresInSeconds:
+          type: integer
+        key:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Key'
+    Key:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        key:
+          type: string
+        developerId:
+          type: string
+        tier:
+          type: string
+        description:
+          type: string
+        origins:
+          type: string
+          nullable: true
+        scopes:
+          type: array
+          items:
+            type: string
+        validUntil:
+          type: string
+          format: date-time
+          nullable: true
+        cidrRanges:
+          type: array
+          items:
+            type: string
+    CreateTokenRequest:
+      type: object
+      properties:
+        cidrRanges:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        description:
+          type: string
     ClanWar:
       type: object
       properties:
@@ -2760,3 +3091,7 @@ components:
       description: JSON Web Token used as an API key
       name: authorization
       in: header
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: session
