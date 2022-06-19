@@ -2051,7 +2051,80 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/Clan'
+            $ref: '#/components/schemas/ClanListEntry'
+          readOnly: true
+    ClanListEntry:
+      type: object
+      properties:
+        warLeague:
+          allOf:
+          - $ref: '#/components/schemas/WarLeague'
+          readOnly: true
+        requiredTrophies:
+          type: integer
+          readOnly: true
+        clanVersusPoints:
+          type: integer
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        isWarLogPublic:
+          type: boolean
+          readOnly: true
+        warFrequency:
+          nullable: true
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/WarFrequency'
+        clanLevel:
+          type: integer
+          readOnly: true
+        warWinStreak:
+          type: integer
+          readOnly: true
+        warWins:
+          type: integer
+          readOnly: true
+        warTies:
+          type: integer
+          readOnly: true
+          nullable: true
+        warLosses:
+          type: integer
+          readOnly: true
+          nullable: true
+        clanPoints:
+          type: integer
+          readOnly: true
+        chatLanguage:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Language'
+          readOnly: true
+        labels:
+          allOf:
+          - $ref: '#/components/schemas/LabelList'
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        location:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Location'
+          readOnly: true
+        type:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/RecruitingType'
+          readOnly: true
+        members:
+          type: integer
+          readOnly: true
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
     Clan:
       type: object
