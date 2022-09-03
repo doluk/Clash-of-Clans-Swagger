@@ -1997,6 +1997,11 @@ components:
       - lose
       - tie
       - win
+    VillageType:
+      type: string
+      enum:
+      - home
+      - builderBase
     WarFrequency:
       type: string
       enum:
@@ -2006,6 +2011,7 @@ components:
       - oncePerWeek
       - moreThanOncePerWeek
       - always
+      - any
     WarPreference:
       type: string
       enum:
@@ -2202,9 +2208,41 @@ components:
         description:
           type: string
           readOnly: true
+        clanCapital:
+          allOf:
+          - $ref: '#/definitions/ClanCapital'
+          readOnly: true
         badgeUrls:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+    ClanCapital:
+      type: object
+      properties:
+        capitalHallLevel:
+          type: integer
+          nullable: true
+          readOnly: true
+        districts:
+          allOf:
+          - $ref: '#/definitions/ClanDistrictDataList'
+          nullable: true
+          readOnly: true
+    ClanDistrictDataList:
+      type: array
+      items:
+        $ref: '#/definitions/ClanDistrictData'
+    ClanDistrictData:
+      type: object
+      properties:
+        name:
+          $ref: '#/definitions/JsonLocalizedName'
+          readonly: true
+        id:
+          type: integer
+          readOnly: true
+        districtHallLevel:
+          type: integer
           readOnly: true
     Language:
       type: object
@@ -2842,6 +2880,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/PlayerAchievementProgressList'
           readOnly: true
+        clanCapitalContributions:
+          type: integer
+          readOnly: true
         versusBattleWinCount:
           type: integer
           readOnly: true
@@ -2876,6 +2917,8 @@ components:
         village:
           type: string
           readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/VillageType'
     PlayerItemLevelList:
       type: array
       items:
@@ -2896,6 +2939,8 @@ components:
         village:
           type: string
           readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/VillageType'
         superTroopIsActive:
           type: boolean
           nullable: true
