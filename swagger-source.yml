@@ -96,6 +96,140 @@ definitions:
         type: integer
       iconUrls:
         type: object
+  ClanCapitalRaidSeasons:
+    type: array
+    items:
+      $ref: '#/definitions/ClanCapitalRaidSeason'
+  ClanCapitalRaidSeason:
+    type: object
+    properties:
+      attackLog:
+        $ref: '#/definitions/ClanCapitalRaidSeasonAttackLogList'
+      defenseLog:
+        $ref: '#/definitions/ClanCapitalRaidSeasonDefenseLogList'
+      state:
+        type: string
+      startTime:
+        type: string
+      endTime:
+        type: string
+      capitalTotalLoot:
+        type: integer
+      raidsCompleted:
+        type: integer
+      totalAttacks:
+        type: integer
+      enemyDistrictsDestroyed:
+        type: integer
+      offensiveReward:
+        type: integer
+      defensiveReward:
+        type: integer
+      members:
+        $ref: '#/definitions/ClanCapitalRaidSeasonMemberList'
+  ClanCapitalRaidSeasonMemberList:
+    type: array
+    items:
+      $ref: '#/definitions/ClanCapitalRaidSeasonMember'
+  ClanCapitalRaidSeasonMember:
+    type: object
+    properties:
+      tag:
+        type: string
+      name:
+        type: string
+      attacks:
+        type: integer
+      attackLimit:
+        type: integer
+      bonusAttackLimit:
+        type: integer
+      capitalResourcesLooted:
+        type: integer
+  ClanCapitalRaidSeasonDefenseLogList:
+    type: array
+    items:
+      $ref: '#/definitions/ClanCapitalRaidSeasonDefenseLogEntry'
+  ClanCapitalRaidSeasonDefenseLogEntry:
+    type: object
+    properties:
+      attacker:
+        $ref: '#/definitions/ClanCapitalRaidSeasonClanInfo'
+      attackCount:
+        type: integer
+      districtCount:
+        type: integer
+      districtsDestroyed:
+        type: integer
+      districts:
+        $ref: '#/definitions/ClanCapitalRaidSeasonDistrictList'
+  ClanCapitalRaidSeasonDistrictList:
+    type: array
+    items:
+      $ref: '#/definitions/ClanCapitalRaidSeasonDistrict'
+  ClanCapitalRaidSeasonDistrict:
+    type: object
+    properties:
+      name:
+        $ref: '#/definitions/JsonLocalizedName'
+      id:
+        type: integer
+      destructionPercent:
+        type: integer
+      attackCount:
+        type: integer
+      totalLooted:
+        type: integer
+      attacks:
+        $ref: '#/definitions/ClanCapitalRaidSeasonAttackList'
+      districtHallLevel:
+        type: integer
+  ClanCapitalRaidSeasonAttackList:
+    type: array
+    items:
+      $ref: '#/definitions/ClanCapitalRaidSeasonAttack'
+  ClanCapitalRaidSeasonAttack:
+    type: object
+    properties:
+      attacker:
+        $ref: '#/definitions/ClanCapitalRaidSeasonAttacker'
+      destructionPercent:
+        type: integer
+  ClanCapitalRaidSeasonAttacker:
+    type: object
+    properties:
+      tag:
+        type: string
+      name:
+        type: string
+  ClanCapitalRaidSeasonClanInfo:
+    type: object
+    properties:
+      tag:
+        type: string
+      name:
+        type: string
+      level:
+        type: integer
+      badgeUrls:
+        type: object
+  ClanCapitalRaidSeasonAttackLogList:
+    type: array
+    items:
+      $ref: '#/definitions/ClanCapitalRaidSeasonAttackLogEntry'
+  ClanCapitalRaidSeasonAttackLogEntry:
+    type: object
+    properties:
+      defender:
+        $ref: '#/definitions/ClanCapitalRaidSeasonClanInfo'
+      attackCount:
+        type: integer
+      districtCount:
+        type: integer
+      districtsDestroyed:
+        type: integer
+      districts:
+        $ref: '#/definitions/ClanCapitalRaidSeasonDistrictList'
   Location:
     type: object
     properties:
@@ -258,28 +392,8 @@ definitions:
         $ref: '#/definitions/ClanMemberList'
       tag:
         type: string
-      clanVersusPoints:
-        type: integer
-      requiredTrophies:
-        type: integer
-      requiredVersusTrophies:
-        type: integer
-      requiredTownhallLevel:
-        type: integer
-      isWarLogPublic:
-        type: boolean
       clanLevel:
         type: integer
-      warFrequency:
-        type: string
-        enum:
-          - UNKNOWN
-          - ALWAYS
-          - MORE_THAN_ONCE_PER_WEEK
-          - ONCE_PER_WEEK
-          - LESS_THAN_ONCE_PER_WEEK
-          - NEVER
-          - ANY
       warWinStreak:
         type: integer
       warWins:
@@ -292,6 +406,28 @@ definitions:
         type: integer
       chatLanguage:
         $ref: '#/definitions/Language'
+      isWarLogPublic:
+        type: boolean
+      warFrequency:
+        type: string
+        enum:
+          - UNKNOWN
+          - ALWAYS
+          - MORE_THAN_ONCE_PER_WEEK
+          - ONCE_PER_WEEK
+          - LESS_THAN_ONCE_PER_WEEK
+          - NEVER
+          - ANY
+      clanVersusPoints:
+        type: integer
+      requiredTrophies:
+        type: integer
+      requiredVersusTrophies:
+        type: integer
+      requiredTownhallLevel:
+        type: integer
+      labels:
+        $ref: '#/definitions/LabelList'
       name:
         type: string
       location:
@@ -304,8 +440,6 @@ definitions:
           - CLOSED
       members:
         type: integer
-      labels:
-        $ref: '#/definitions/LabelList'
       description:
         type: string
       clanCapital:
@@ -445,9 +579,9 @@ definitions:
   ClanVersusRanking:
     type: object
     properties:
-      clanVersusPoints:
-        type: integer
       clanPoints:
+        type: integer
+      clanVersusPoints:
         type: integer
   PlayerRankingList:
     type: array
@@ -730,15 +864,15 @@ definitions:
     properties:
       legendTrophies:
         type: integer
-      previousSeason:
-        $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
       previousVersusSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
-      bestVersusSeason:
+      currentSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
       bestSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
-      currentSeason:
+      bestVersusSeason:
+        $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
+      previousSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
   LegendLeagueTournamentSeasonResult:
     type: object
@@ -1732,6 +1866,57 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/Location'
+  /clans/{clanTag}/capitalraidseasons:
+    get:
+      summary: Retrieve clan's capital raid seasons
+      description: Retrieve clan's capital raid seasons
+      operationId: getCapitalRaidSeasons
+      tags:
+        - clans
+      parameters:
+        -
+          name: clanTag
+          in: path
+          description: Tag of the clan.
+          required: true
+          type: string
+        -
+          name: limit
+          in: query
+          description: Limit the number of items returned in the response.
+          required: false
+          type: integer
+        -
+          name: after
+          in: query
+          description: |
+            Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          type: string
+        -
+          name: before
+          in: query
+          description: |
+            Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          type: string
+      responses:
+        '400':
+          $ref: '#/responses/BadRequestSpec'
+        '403':
+          $ref: '#/responses/ForbiddenSpec'
+        '404':
+          $ref: '#/responses/NotFoundSpec'
+        '429':
+          $ref: '#/responses/RequestThrottledSpec'
+        '500':
+          $ref: '#/responses/UnknownExceptionSpec'
+        '503':
+          $ref: '#/responses/InMaintenanceSpec'
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/ClanCapitalRaidSeasons'
   /labels/clans:
     get:
       summary: List clan labels

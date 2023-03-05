@@ -203,6 +203,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClientError'
+  /clans/{clanTag}/capitalraidseasons:
+      get:
+        tags:
+        - clans
+        summary: Retrieve clan's capital raid seasons
+        description: Retrieve clan's capital raid seasons
+        operationId: getCapitalRaidSeasons
+        parameters:
+        - name: clanTag
+          in: path
+          description: Tag of the clan.
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Limit the number of items returned in the response.
+          schema:
+            type: integer
+        - name: after
+          in: query
+          description: |
+            Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: |
+            Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          schema:
+            type: string
+        responses:
+          200:
+            description: Successful response
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ClanCapitalRaidSeasons'
+          400:
+            description: Client provided incorrect parameters for the request.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ClientError'
+          403:
+            description: |
+              Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ClientError'
+          404:
+            description: Resource was not found.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ClientError'
+          429:
+            description: |
+              Request was throttled, because amount of requests was above the threshold defined for the used API token.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ClientError'
+          500:
+            description: Unknown error happened when handling the request.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ClientError'
+          503:
+            description: Service is temprorarily unavailable because of maintenance.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ClientError'
   /players/{playerTag}/verifytoken:
     post:
       tags:
@@ -2210,7 +2286,7 @@ components:
           readOnly: true
         clanCapital:
           allOf:
-          - $ref: '#/definitions/ClanCapital'
+          - $ref: '#/components/schemas/ClanCapital'
           readOnly: true
         badgeUrls:
           allOf:
@@ -2225,18 +2301,225 @@ components:
           readOnly: true
         districts:
           allOf:
-          - $ref: '#/definitions/ClanDistrictDataList'
+          - $ref: '#/components/schemas/ClanDistrictDataList'
           nullable: true
           readOnly: true
+    ClanCapitalRaidSeasons:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClanCapitalRaidSeason'
+          readOnly: true
+    ClanCapitalRaidSeason:
+      type: object
+      properties:
+        attackLog:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ClanCapitalRaidSeasonAttackLogList'
+        defenseLog:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ClanCapitalRaidSeasonDefenseLogList'
+        state:
+          type: string
+          readOnly: true
+          enum:
+          - unknown
+          - ongoing
+          - ended
+        startTime:
+          type: string
+          format: date-time
+          readOnly: true
+        endTime:
+          type: string
+          format: date-time
+          readOnly: true
+        capitalTotalLoot:
+          type: integer
+          readOnly: true
+        raidsCompleted:
+          type: integer
+          readOnly: true
+        totalAttacks:
+          type: integer
+          readOnly: true
+        enemyDistrictsDestroyed:
+          type: integer
+          readOnly: true
+        offensiveReward:
+          type: integer
+          readOnly: true
+        defensiveReward:
+          type: integer
+          readOnly: true
+        members:
+          nullable: true
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ClanCapitalRaidSeasonMemberList'
+    ClanCapitalRaidSeasonMemberList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanCapitalRaidSeasonMember'
+    ClanCapitalRaidSeasonMember:
+      type: object
+      properties:
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        attacks:
+          type: integer
+          readOnly: true
+        attackLimit:
+          type: integer
+          readOnly: true
+        bonusAttackLimit:
+          type: integer
+          readOnly: true
+        capitalResourcesLooted:
+          type: integer
+          readOnly: true
+    ClanCapitalRaidSeasonDefenseLogList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanCapitalRaidSeasonDefenseLogEntry'
+    ClanCapitalRaidSeasonDefenseLogEntry:
+      type: object
+      properties:
+        attacker:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ClanCapitalRaidSeasonClanInfo'
+        attackCount:
+          type: integer
+          readOnly: true
+        districtCount:
+          type: integer
+          readOnly: true
+        districtsDestroyed:
+          type: integer
+          readOnly: true
+        districts:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ClanCapitalRaidSeasonDistrictList'
+    ClanCapitalRaidSeasonDistrictList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanCapitalRaidSeasonDistrict'
+    ClanCapitalRaidSeasonDistrict:
+      type: object
+      properties:
+        name:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/JsonLocalizedName'
+        id:
+          type: integer
+          readOnly: true
+        destructionPercent:
+          type: integer
+          readOnly: true
+        attackCount:
+          type: integer
+          readOnly: true
+        totalLooted:
+          type: integer
+          readOnly: true
+        attacks:
+          nullable: true
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ClanCapitalRaidSeasonAttackList'
+        districtHallLevel:
+          type: integer
+          readOnly: true
+    ClanCapitalRaidSeasonAttackList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanCapitalRaidSeasonAttack'
+    ClanCapitalRaidSeasonAttack:
+      type: object
+      properties:
+        attacker:
+          allOf:
+            - $ref: '#/components/schemas/ClanCapitalRaidSeasonAttacker'
+          readOnly: true
+        destructionPercent:
+          type: integer
+          readOnly: true
+    ClanCapitalRaidSeasonAttacker:
+      type: object
+      properties:
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+    ClanCapitalRaidSeasonClanInfo:
+      type: object
+      properties:
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        level:
+          type: integer
+          readOnly: true
+        # badgeUrls:
+        #   type: object
+        #   properties: {}
+
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+
+
+
+    ClanCapitalRaidSeasonAttackLogList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClanCapitalRaidSeasonAttackLogEntry'
+    ClanCapitalRaidSeasonAttackLogEntry:
+      type: object
+      properties:
+        defender:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ClanCapitalRaidSeasonClanInfo'
+        attackCount:
+          type: integer
+          readOnly: true
+        districtCount:
+          type: integer
+          readOnly: true
+        districtsDestroyed:
+          type: integer
+          readOnly: true
+        districts:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/ClanCapitalRaidSeasonDistrictList'
     ClanDistrictDataList:
       type: array
       items:
-        $ref: '#/definitions/ClanDistrictData'
+        $ref: '#/components/schemas/ClanDistrictData'
     ClanDistrictData:
       type: object
       properties:
         name:
-          $ref: '#/definitions/JsonLocalizedName'
+          $ref: '#/components/schemas/JsonLocalizedName'
           readonly: true
         id:
           type: integer
@@ -2640,7 +2923,8 @@ components:
           readOnly: true
         season:
           type: string
-          format: date-time
+          format: date
+          example: 2023-01
           readOnly: true
         clans:
           $ref: '#/components/schemas/ClanWarLeagueClanList'
@@ -2983,7 +3267,8 @@ components:
           readOnly: true
         id:
           type: string
-          format: date-time
+          format: date
+          example: 2023-01
           readOnly: true
         rank:
           type: integer
