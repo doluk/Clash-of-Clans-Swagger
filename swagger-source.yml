@@ -170,6 +170,8 @@ definitions:
   ClanCapitalRaidSeasonDistrict:
     type: object
     properties:
+      stars:
+        type: integer
       name:
         $ref: '#/definitions/JsonLocalizedName'
       id:
@@ -194,6 +196,8 @@ definitions:
       attacker:
         $ref: '#/definitions/ClanCapitalRaidSeasonAttacker'
       destructionPercent:
+        type: integer
+      stars:
         type: integer
   ClanCapitalRaidSeasonAttacker:
     type: object
@@ -252,6 +256,17 @@ definitions:
         type: string
   JsonNode:
     type: object
+  ClanCapitalRankingList:
+    type: array
+    items:
+      $ref: '#/definitions/ClanCapitalRanking'
+  ClanCapitalRanking:
+    type: object
+    properties:
+      clanCapitalPoints:
+        type: integer
+      clanPoints:
+        type: integer
   WarStatusList:
     type: array
     items:
@@ -319,6 +334,29 @@ definitions:
         type: integer
       versusTrophies:
         type: integer
+      playerHouse:
+        $ref: '#/definitions/PlayerHouse'
+  PlayerHouse:
+    type: object
+    properties:
+      elements:
+        $ref: '#/definitions/PlayerHouseElementList'
+  PlayerHouseElementList:
+    type: array
+    items:
+      $ref: '#/definitions/PlayerHouseElement'
+  PlayerHouseElement:
+    type: object
+    properties:
+      id:
+        type: integer
+      type:
+        type: string
+        enum:
+          - GROUND
+          - ROOF
+          - FOOT
+          - DECO
   League:
     type: object
     properties:
@@ -388,10 +426,32 @@ definitions:
     properties:
       warLeague:
         $ref: '#/definitions/WarLeague'
+      capitalLeague:
+        $ref: '#/definitions/CapitalLeague'
       memberList:
         $ref: '#/definitions/ClanMemberList'
       tag:
         type: string
+      clanVersusPoints:
+        type: integer
+      clanCapitalPoints:
+        type: integer
+      requiredTrophies:
+        type: integer
+      requiredVersusTrophies:
+        type: integer
+      requiredTownhallLevel:
+        type: integer
+      warFrequency:
+        type: string
+        enum:
+          - UNKNOWN
+          - ALWAYS
+          - MORE_THAN_ONCE_PER_WEEK
+          - ONCE_PER_WEEK
+          - LESS_THAN_ONCE_PER_WEEK
+          - NEVER
+          - ANY
       clanLevel:
         type: integer
       warWinStreak:
@@ -404,28 +464,12 @@ definitions:
         type: integer
       clanPoints:
         type: integer
-      chatLanguage:
-        $ref: '#/definitions/Language'
+      isFamilyFriendly:
+        type: boolean
       isWarLogPublic:
         type: boolean
-      warFrequency:
-        type: string
-        enum:
-          - UNKNOWN
-          - ALWAYS
-          - MORE_THAN_ONCE_PER_WEEK
-          - ONCE_PER_WEEK
-          - LESS_THAN_ONCE_PER_WEEK
-          - NEVER
-          - ANY
-      clanVersusPoints:
-        type: integer
-      requiredTrophies:
-        type: integer
-      requiredVersusTrophies:
-        type: integer
-      requiredTownhallLevel:
-        type: integer
+      chatLanguage:
+        $ref: '#/definitions/Language'
       labels:
         $ref: '#/definitions/LabelList'
       name:
@@ -475,6 +519,13 @@ definitions:
         type: integer
       languageCode:
         type: string
+  CapitalLeague:
+    type: object
+    properties:
+      name:
+        $ref: '#/definitions/JsonLocalizedName'
+      id:
+        type: integer
   ClanWar:
     type: object
     properties:
@@ -579,9 +630,9 @@ definitions:
   ClanVersusRanking:
     type: object
     properties:
-      clanPoints:
-        type: integer
       clanVersusPoints:
+        type: integer
+      clanPoints:
         type: integer
   PlayerRankingList:
     type: array
@@ -747,6 +798,10 @@ definitions:
         type: integer
       badgeUrls:
         type: object
+  CapitalLeagueList:
+    type: array
+    items:
+      $ref: '#/definitions/CapitalLeague'
   Player:
     type: object
     properties:
@@ -813,6 +868,8 @@ definitions:
         $ref: '#/definitions/PlayerAchievementProgressList'
       clanCapitalContributions:
         type: integer
+      playerHouse:
+        $ref: '#/definitions/PlayerHouse'
       versusBattleWinCount:
         type: integer
   PlayerAchievementProgressList:
@@ -864,15 +921,15 @@ definitions:
     properties:
       legendTrophies:
         type: integer
-      previousVersusSeason:
-        $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
       currentSeason:
+        $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
+      previousSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
       bestSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
-      bestVersusSeason:
+      previousVersusSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
-      previousSeason:
+      bestVersusSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
   LegendLeagueTournamentSeasonResult:
     type: object
@@ -969,6 +1026,51 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/Player'
+  /capitalleagues:
+    get:
+      summary: List capital leagues
+      description: List capital leagues
+      operationId: getCapitalLeagues
+      tags:
+        - leagues
+      parameters:
+        -
+          name: limit
+          in: query
+          description: Limit the number of items returned in the response.
+          required: false
+          type: integer
+        -
+          name: after
+          in: query
+          description: |
+            Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          type: string
+        -
+          name: before
+          in: query
+          description: |
+            Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          type: string
+      responses:
+        '400':
+          $ref: '#/responses/BadRequestSpec'
+        '403':
+          $ref: '#/responses/ForbiddenSpec'
+        '404':
+          $ref: '#/responses/NotFoundSpec'
+        '429':
+          $ref: '#/responses/RequestThrottledSpec'
+        '500':
+          $ref: '#/responses/UnknownExceptionSpec'
+        '503':
+          $ref: '#/responses/InMaintenanceSpec'
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/CapitalLeagueList'
   /locations/{locationId}/rankings/clans:
     get:
       summary: Get clan rankings for a specific location
@@ -1280,6 +1382,37 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/PlayerRankingList'
+  /capitalleagues/{leagueId}:
+    get:
+      summary: Get capital league information
+      description: Get capital league information
+      operationId: getCapitalLeague
+      tags:
+        - leagues
+      parameters:
+        -
+          name: leagueId
+          in: path
+          description: Identifier of the league.
+          required: true
+          type: string
+      responses:
+        '400':
+          $ref: '#/responses/BadRequestSpec'
+        '403':
+          $ref: '#/responses/ForbiddenSpec'
+        '404':
+          $ref: '#/responses/NotFoundSpec'
+        '429':
+          $ref: '#/responses/RequestThrottledSpec'
+        '500':
+          $ref: '#/responses/UnknownExceptionSpec'
+        '503':
+          $ref: '#/responses/InMaintenanceSpec'
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/CapitalLeague'
   /locations/{locationId}/rankings/clans-versus:
     get:
       summary: Get clan versus rankings for a specific location
@@ -1835,6 +1968,57 @@ paths:
           description: Successful response
           schema:
             $ref: '#/definitions/WarLeague'
+  /locations/{locationId}/rankings/capitals:
+    get:
+      summary: Get capital rankings for a specific location
+      description: Get capital rankings for a specific location
+      operationId: getClanCapitalRanking
+      tags:
+        - locations
+      parameters:
+        -
+          name: locationId
+          in: path
+          description: Identifier of the location to retrieve.
+          required: true
+          type: string
+        -
+          name: limit
+          in: query
+          description: Limit the number of items returned in the response.
+          required: false
+          type: integer
+        -
+          name: after
+          in: query
+          description: |
+            Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          type: string
+        -
+          name: before
+          in: query
+          description: |
+            Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+          required: false
+          type: string
+      responses:
+        '400':
+          $ref: '#/responses/BadRequestSpec'
+        '403':
+          $ref: '#/responses/ForbiddenSpec'
+        '404':
+          $ref: '#/responses/NotFoundSpec'
+        '429':
+          $ref: '#/responses/RequestThrottledSpec'
+        '500':
+          $ref: '#/responses/UnknownExceptionSpec'
+        '503':
+          $ref: '#/responses/InMaintenanceSpec'
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/ClanCapitalRankingList'
   /locations/{locationId}:
     get:
       summary: Get location information

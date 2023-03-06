@@ -25,6 +25,139 @@ tags:
   description: Esports related APIs
 - name: developer
 paths:
+  /capitalleagues:
+    get:
+      summary: List capital leagues
+      description: List capital leagues
+      operationId: getCapitalLeagues
+      tags:
+      - leagues
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        required: false
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        required: false
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        required: false
+        schema:
+          type: string
+      responses:
+        400:
+          $ref: '#/components/responses/BadRequestSpec'
+        403:
+          $ref: '#/components/responses/ForbiddenSpec'
+        404:
+          $ref: '#/components/responses/NotFoundSpec'
+        429:
+          $ref: '#/components/responses/RequestThrottledSpec'
+        500:
+          $ref: '#/components/responses/UnknownExceptionSpec'
+        503:
+          $ref: '#/components/responses/InMaintenanceSpec'
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CapitalLeagueObject'
+  /capitalleagues/{leagueId}:
+    get:
+      summary: Get capital league information
+      description: Get capital league information
+      operationId: getCapitalLeague
+      tags:
+      - leagues
+      parameters:
+      - name: leagueId
+        in: path
+        description: Identifier of the league.
+        required: true
+        schema:
+          type: string
+      responses:
+        400:
+          $ref: '#/components/responses/BadRequestSpec'
+        403:
+          $ref: '#/components/responses/ForbiddenSpec'
+        404:
+          $ref: '#/components/responses/NotFoundSpec'
+        429:
+          $ref: '#/components/responses/RequestThrottledSpec'
+        500:
+          $ref: '#/components/responses/UnknownExceptionSpec'
+        503:
+          $ref: '#/components/responses/InMaintenanceSpec'
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CapitalLeague'
+  /locations/{locationId}/rankings/capitals:
+    get:
+      summary: Get capital rankings for a specific location
+      description: Get capital rankings for a specific location
+      operationId: getClanCapitalRanking
+      tags:
+      - locations
+      parameters:
+      - name: locationId
+        in: path
+        description: Identifier of the location to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        required: false
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        required: false
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        required: false
+        schema:
+          type: string
+      responses:
+        400:
+          $ref: '#/components/responses/BadRequestSpec'
+        403:
+          $ref: '#/components/responses/ForbiddenSpec'
+        404:
+          $ref: '#/components/responses/NotFoundSpec'
+        42':
+          $ref: '#/components/responses/RequestThrottledSpec'
+        500:
+          $ref: '#/components/responses/UnknownExceptionSpec'
+        503:
+          $ref: '#/components/responses/InMaintenanceSpec'
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClanCapitalRankingObject'
   /clans/{clanTag}/currentwar:
     get:
       tags:
@@ -2292,6 +2425,30 @@ components:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
+        capitalLeague:
+          allOf:
+          - $ref: '#/definitions/CapitalLeague'
+          readOnly: true
+        isFamilyFriendly:
+          type: boolean
+          readOnly: true
+    CapitalLeague:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/definitions/JsonLocalizedName'
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+    CapitalLeagueObject:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CapitalLeague'
     ClanCapital:
       type: object
       properties:
@@ -2417,6 +2574,9 @@ components:
     ClanCapitalRaidSeasonDistrict:
       type: object
       properties:
+        stars:
+          type: integer
+          readOnly: true
         name:
           readOnly: true
           allOf:
@@ -2445,6 +2605,50 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ClanCapitalRaidSeasonAttack'
+    ClanCapitalRankingObject:
+      type: object
+      properties:
+        items:
+          allOf:
+          - $ref: '#/definitions/ClanCapitalRankingList'
+          readOnly: true
+    ClanCapitalRankingList:
+      type: array
+      items:
+        $ref: '#/definitions/ClanCapitalRanking'
+    ClanCapitalRanking:
+      type: object
+      properties:
+        clanCapitalPoints:
+          type: integer
+          readOnly: true
+        tag:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        location:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Location'
+          readOnly: true
+        badgeUrls:
+          allOf:
+          - $ref: '#/components/schemas/BadgeUrls'
+          readOnly: true
+        clanLevel:
+          type: integer
+          readOnly: true
+        members:
+          type: integer
+          readOnly: true
+        rank:
+          type: integer
+          readOnly: true
+        previousRank:
+          type: integer
+          readOnly: true
     ClanCapitalRaidSeasonAttack:
       type: object
       properties:
@@ -2453,6 +2657,9 @@ components:
             - $ref: '#/components/schemas/ClanCapitalRaidSeasonAttacker'
           readOnly: true
         destructionPercent:
+          type: integer
+          readOnly: true
+        stars:
           type: integer
           readOnly: true
     ClanCapitalRaidSeasonAttacker:
@@ -2476,17 +2683,10 @@ components:
         level:
           type: integer
           readOnly: true
-        # badgeUrls:
-        #   type: object
-        #   properties: {}
-
         badgeUrls:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
-
-
-
     ClanCapitalRaidSeasonAttackLogList:
       type: array
       items:
@@ -2628,6 +2828,38 @@ components:
         versusTrophies:
           type: integer
           readOnly: true
+        playerHouse:
+          allOf:
+          - $ref: '#/definitions/PlayerHouse'
+          readOnly: true
+          nullable: true
+    PlayerHouse:
+      type: object
+      properties:
+        elements:
+          allOf:
+          - $ref: '#/definitions/PlayerHouseElementList'
+          readOnly: true
+    PlayerHouseElementList:
+      type: array
+      items:
+        $ref: '#/definitions/PlayerHouseElement'
+    PlayerHouseElement:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          type: string
+          readOnly: true
+          enum:
+            - unknown
+            - ground
+            - roof
+            - foot
+            - decoration
+            - walls
     League:
       type: object
       properties:
@@ -3170,6 +3402,11 @@ components:
         versusBattleWinCount:
           type: integer
           readOnly: true
+        playerHouse:
+          allOf:
+          - $ref: '#/definitions/PlayerHouse'
+          readOnly: true
+          nullable: true
     PlayerAchievementProgressList:
       type: array
       items:
