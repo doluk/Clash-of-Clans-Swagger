@@ -2449,6 +2449,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CapitalLeague'
+          readOnly: true
     ClanCapital:
       type: object
       properties:
