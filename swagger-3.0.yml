@@ -172,6 +172,12 @@ paths:
         required: true
         schema:
           type: string
+      - name: realtime
+        in: query
+        description: Used to bypass cache. Only SuperCell approved users may use this option.
+        required: false
+        schema:
+          type: boolean
       responses:
         200:
           description: Successful response
@@ -231,6 +237,12 @@ paths:
         required: true
         schema:
           type: string
+      - name: realtime
+        in: query
+        description: Used to bypass cache. Only SuperCell approved users may use this option.
+        required: false
+        schema:
+          type: boolean
       responses:
         200:
           description: Successful response
@@ -706,6 +718,12 @@ paths:
         required: true
         schema:
           type: string
+      - name: realtime
+        in: query
+        description: Used to bypass cache. Only SuperCell approved users may use this option.
+        required: false
+        schema:
+          type: boolean
       responses:
         200:
           description: Successful response
