@@ -55,17 +55,17 @@ paths:
           type: string
       responses:
         400:
-          $ref: '#/components/responses/BadRequestSpec'
+          $ref: '#/components/responses/ClientError'
         403:
-          $ref: '#/components/responses/ForbiddenSpec'
+          $ref: '#/components/responses/ClientError'
         404:
-          $ref: '#/components/responses/NotFoundSpec'
+          $ref: '#/components/responses/ClientError'
         429:
-          $ref: '#/components/responses/RequestThrottledSpec'
+          $ref: '#/components/responses/ClientError'
         500:
-          $ref: '#/components/responses/UnknownExceptionSpec'
+          $ref: '#/components/responses/ClientError'
         503:
-          $ref: '#/components/responses/InMaintenanceSpec'
+          $ref: '#/components/responses/ClientError'
         200:
           description: Successful response
           content:
@@ -88,17 +88,17 @@ paths:
           type: string
       responses:
         400:
-          $ref: '#/components/responses/BadRequestSpec'
+          $ref: '#/components/responses/ClientError'
         403:
-          $ref: '#/components/responses/ForbiddenSpec'
+          $ref: '#/components/responses/ClientError'
         404:
-          $ref: '#/components/responses/NotFoundSpec'
+          $ref: '#/components/responses/ClientError'
         429:
-          $ref: '#/components/responses/RequestThrottledSpec'
+          $ref: '#/components/responses/ClientError'
         500:
-          $ref: '#/components/responses/UnknownExceptionSpec'
+          $ref: '#/components/responses/ClientError'
         503:
-          $ref: '#/components/responses/InMaintenanceSpec'
+          $ref: '#/components/responses/ClientError'
         200:
           description: Successful response
           content:
@@ -141,17 +141,17 @@ paths:
           type: string
       responses:
         400:
-          $ref: '#/components/responses/BadRequestSpec'
+          $ref: '#/components/responses/ClientError'
         403:
-          $ref: '#/components/responses/ForbiddenSpec'
+          $ref: '#/components/responses/ClientError'
         404:
-          $ref: '#/components/responses/NotFoundSpec'
+          $ref: '#/components/responses/ClientError'
         42':
-          $ref: '#/components/responses/RequestThrottledSpec'
+          $ref: '#/components/responses/ClientError'
         500:
-          $ref: '#/components/responses/UnknownExceptionSpec'
+          $ref: '#/components/responses/ClientError'
         503:
-          $ref: '#/components/responses/InMaintenanceSpec'
+          $ref: '#/components/responses/ClientError'
         200:
           description: Successful response
           content:
@@ -552,13 +552,72 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClientError'
-  /locations/{locationId}/rankings/players-versus:
+  /builderbaseleagues/{leagueId}:
+    get:
+      tags:
+      - leagues
+      summary: Get Builder Base league information
+      description: Get Builder Base league information
+      operationId: getBuilderBaseLeague
+      parameters:
+      - name: leagueId
+        in: path
+        description: Identifier of the league.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuilderBaseLeague'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /locations/{locationId}/rankings/players-builder-base:
     get:
       tags:
       - locations
       summary: Get player versus rankings for a specific location
       description: Get player versus rankings for a specific location
-      operationId: getPlayerVersusRanking
+      operationId: getPlayerBuilderBaseRanking
       parameters:
       - name: locationId
         in: path
@@ -589,7 +648,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerVersusRankingList'
+                $ref: '#/components/schemas/PlayerBuilderBaseRankingList'
         400:
           description: Client provided incorrect parameters for the request.
           content:
@@ -731,6 +790,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClanWar'
+        400:
+          description: Client provided incorrect parameters for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        403:
+          description: |
+            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        404:
+          description: Resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        429:
+          description: |
+            Request was throttled, because amount of requests was above the threshold defined for the used API token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        500:
+          description: Unknown error happened when handling the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+        503:
+          description: Service is temprorarily unavailable because of maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientError'
+  /builderbaseleagues:
+    get:
+      tags:
+      - leagues
+      summary: List Builder Base leagues
+      description: List Builder Base leagues
+      operationId: getBuilderBaseLeagues
+      parameters:
+      - name: limit
+        in: query
+        description: Limit the number of items returned in the response.
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: |
+          Return only items that occur after this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: |
+          Return only items that occur before this marker. Before marker can be found from the response, inside the 'paging' property. Note that only after or before can be specified for a request, not both.
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuilderBaseLeagueList'
         400:
           description: Client provided incorrect parameters for the request.
           content:
@@ -1597,13 +1726,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClientError'
-  /locations/{locationId}/rankings/clans-versus:
+  /locations/{locationId}/rankings/clans-builder-base:
     get:
       tags:
       - locations
       summary: Get clan versus rankings for a specific location
       description: Get clan versus rankings for a specific location
-      operationId: getClanVersusRanking
+      operationId: getClanBuilderBaseRanking
       parameters:
       - name: locationId
         in: path
@@ -1634,7 +1763,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClanVersusRankingList'
+                $ref: '#/components/schemas/ClanBuilderBaseRankingList'
         400:
           description: Client provided incorrect parameters for the request.
           content:
@@ -2296,7 +2425,7 @@ components:
         requiredTrophies:
           type: integer
           readOnly: true
-        clanVersusPoints:
+        clanBuilderBasePoints:
           type: integer
           readOnly: true
         tag:
@@ -2373,7 +2502,10 @@ components:
         requiredTrophies:
           type: integer
           readOnly: true
-        clanVersusPoints:
+        requiredBuilderBaseTrophies:
+          type: integer
+          readOnly: true
+        clanBuilderBasePoints:
           type: integer
           readOnly: true
         tag:
@@ -2739,7 +2871,7 @@ components:
       properties:
         name:
           $ref: '#/components/schemas/JsonLocalizedName'
-          readonly: true
+          readOnly: true
         id:
           type: integer
           readOnly: true
@@ -2815,6 +2947,13 @@ components:
           allOf:
           - $ref: '#/components/schemas/League'
           readOnly: true
+        builderBaseLeague:
+          allOf:
+          - $ref: '#/components/schemas/BuilderBaseLeague'
+          readOnly: true
+        versusTrophies:
+          type: integer
+          readOnly: true
         tag:
           type: string
           readOnly: true
@@ -2844,7 +2983,7 @@ components:
         trophies:
           type: integer
           readOnly: true
-        versusTrophies:
+        builderBaseTrophies:
           type: integer
           readOnly: true
         playerHouse:
@@ -2879,6 +3018,16 @@ components:
             - foot
             - decoration
             - walls
+    BuilderBaseLeague:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/JsonLocalizedName'
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
     League:
       type: object
       properties:
@@ -2893,18 +3042,18 @@ components:
           allOf:
           - $ref: '#/components/schemas/IconUrls'
           readOnly: true
-    ClanVersusRankingList:
+    ClanBuilderBaseRankingList:
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/ClanVersusRanking'
+            $ref: '#/components/schemas/ClanBuilderBaseRanking'
           readOnly: true
-    ClanVersusRanking:
+    ClanBuilderBaseRanking:
       type: object
       properties:
-        clanVersusPoints:
+        clanBuilderBasePoints:
           type: integer
           readOnly: true
         clanPoints:
@@ -3281,23 +3430,39 @@ components:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
-    PlayerVersusRankingList:
+    BuilderBaseLeagueList:
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/PlayerVersusRanking'
+            $ref: '#/components/schemas/BuilderBaseLeague'
           readOnly: true
-    PlayerVersusRanking:
+    PlayerBuilderBaseRankingList:
       type: object
       properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerBuilderBaseRanking'
+          readOnly: true
+    PlayerBuilderBaseRanking:
+      type: object
+      properties:
+        builderBaseLeague:
+          allOf:
+          - $ref: '#/components/schemas/BuilderBaseLeague'
+          readOnly: true
         clan:
           nullable: true
           allOf:
           - $ref: '#/components/schemas/PlayerRankingClan'
           readOnly: true
+        versusTrophies:
+          type: integer
+          readOnly: true
         versusBattleWins:
+          deprecated: true
           type: integer
           readOnly: true
         tag:
@@ -3315,7 +3480,7 @@ components:
         previousRank:
           type: integer
           readOnly: true
-        versusTrophies:
+        builderBaseTrophies:
           type: integer
           readOnly: true
     Player:
@@ -3330,6 +3495,11 @@ components:
           nullable: true
           allOf:
           - $ref: '#/components/schemas/League'
+          readOnly: true
+        builderBaseLeague:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/BuilderBaseLeague'
           readOnly: true
         role:
           nullable: true
@@ -3355,6 +3525,7 @@ components:
           readOnly: true
           nullable: true
         versusBattleWins:
+          deprecated: true
           type: integer
           readOnly: true
         legendStatistics:
@@ -3402,7 +3573,7 @@ components:
         builderHallLevel:
           type: integer
           readOnly: true
-        versusTrophies:
+        builderBaseTrophies:
           type: integer
           readOnly: true
         bestVersusTrophies:
@@ -3492,12 +3663,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
           readOnly: true
-        previousVersusSeason:
+        previousBuilderBaseSeason:
           nullable: true
           allOf:
           - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
           readOnly: true
-        bestVersusSeason:
+        bestBuilderBaseSeason:
           nullable: true
           allOf:
           - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
