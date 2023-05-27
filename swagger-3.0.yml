@@ -3461,10 +3461,6 @@ components:
         versusTrophies:
           type: integer
           readOnly: true
-        versusBattleWins:
-          deprecated: true
-          type: integer
-          readOnly: true
         tag:
           type: string
           readOnly: true
@@ -3524,10 +3520,6 @@ components:
           type: integer
           readOnly: true
           nullable: true
-        versusBattleWins:
-          deprecated: true
-          type: integer
-          readOnly: true
         legendStatistics:
           nullable: true
           allOf:
@@ -3573,6 +3565,7 @@ components:
         builderHallLevel:
           type: integer
           readOnly: true
+          nullable: true
         builderBaseTrophies:
           type: integer
           readOnly: true
@@ -3592,6 +3585,7 @@ components:
         versusBattleWinCount:
           type: integer
           readOnly: true
+          nullable: true
         playerHouse:
           allOf:
           - $ref: '#/definitions/PlayerHouse'
