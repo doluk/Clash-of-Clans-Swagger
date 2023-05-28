@@ -2951,6 +2951,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/BuilderBaseLeague'
           readOnly: true
+          nullable: true
         versusTrophies:
           type: integer
           readOnly: true
@@ -2986,6 +2987,7 @@ components:
         builderBaseTrophies:
           type: integer
           readOnly: true
+          nullable: true
         playerHouse:
           allOf:
           - $ref: '#/definitions/PlayerHouse'
