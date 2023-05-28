@@ -2952,9 +2952,6 @@ components:
           - $ref: '#/components/schemas/BuilderBaseLeague'
           readOnly: true
           nullable: true
-        versusTrophies:
-          type: integer
-          readOnly: true
         tag:
           type: string
           readOnly: true
@@ -2987,7 +2984,6 @@ components:
         builderBaseTrophies:
           type: integer
           readOnly: true
-          nullable: true
         playerHouse:
           allOf:
           - $ref: '#/definitions/PlayerHouse'
@@ -3459,9 +3455,6 @@ components:
           nullable: true
           allOf:
           - $ref: '#/components/schemas/PlayerRankingClan'
-          readOnly: true
-        versusTrophies:
-          type: integer
           readOnly: true
         tag:
           type: string
