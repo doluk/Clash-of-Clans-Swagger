@@ -3686,9 +3686,11 @@ components:
           format: date
           example: 2023-01
           readOnly: true
+          nullable: true
         rank:
           type: integer
           readOnly: true
+          nullable: true
     PlayerClan:
       type: object
       properties:
