@@ -3311,6 +3311,7 @@ components:
         duration:
           type: integer
           readOnly: true
+          nullable: true
     ClanWarLeagueGroup:
       type: object
       properties:
