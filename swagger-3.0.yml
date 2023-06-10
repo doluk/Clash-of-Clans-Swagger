@@ -3054,9 +3054,6 @@ components:
         clanBuilderBasePoints:
           type: integer
           readOnly: true
-        clanPoints:
-          type: integer
-          readOnly: true
     PlayerRankingList:
       type: object
       properties:
@@ -3165,6 +3162,7 @@ components:
         attacksPerMember:
           type: integer
           readOnly: true
+          nullable: true
         opponent:
           allOf:
           - $ref: '#/components/schemas/WarClanLogEntry'
@@ -3212,6 +3210,7 @@ components:
         attacks:
           type: integer
           readOnly: true
+          nullable: true
         stars:
           type: integer
           readOnly: true
