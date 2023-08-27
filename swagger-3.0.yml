@@ -2358,6 +2358,7 @@ components:
       enum:
       - home
       - builderBase
+      - clanCapital
     WarFrequency:
       type: string
       enum:

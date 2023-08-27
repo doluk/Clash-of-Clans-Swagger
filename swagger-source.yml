@@ -103,10 +103,10 @@ definitions:
   ClanCapitalRaidSeason:
     type: object
     properties:
-      defenseLog:
-        $ref: '#/definitions/ClanCapitalRaidSeasonDefenseLogList'
       attackLog:
         $ref: '#/definitions/ClanCapitalRaidSeasonAttackLogList'
+      defenseLog:
+        $ref: '#/definitions/ClanCapitalRaidSeasonDefenseLogList'
       state:
         type: string
       startTime:
@@ -146,14 +146,14 @@ definitions:
         type: integer
       capitalResourcesLooted:
         type: integer
-  ClanCapitalRaidSeasonAttackLogList:
+  ClanCapitalRaidSeasonDefenseLogList:
     type: array
     items:
-      $ref: '#/definitions/ClanCapitalRaidSeasonAttackLogEntry'
-  ClanCapitalRaidSeasonAttackLogEntry:
+      $ref: '#/definitions/ClanCapitalRaidSeasonDefenseLogEntry'
+  ClanCapitalRaidSeasonDefenseLogEntry:
     type: object
     properties:
-      defender:
+      attacker:
         $ref: '#/definitions/ClanCapitalRaidSeasonClanInfo'
       attackCount:
         type: integer
@@ -217,14 +217,14 @@ definitions:
         type: integer
       badgeUrls:
         type: object
-  ClanCapitalRaidSeasonDefenseLogList:
+  ClanCapitalRaidSeasonAttackLogList:
     type: array
     items:
-      $ref: '#/definitions/ClanCapitalRaidSeasonDefenseLogEntry'
-  ClanCapitalRaidSeasonDefenseLogEntry:
+      $ref: '#/definitions/ClanCapitalRaidSeasonAttackLogEntry'
+  ClanCapitalRaidSeasonAttackLogEntry:
     type: object
     properties:
-      attacker:
+      defender:
         $ref: '#/definitions/ClanCapitalRaidSeasonClanInfo'
       attackCount:
         type: integer
@@ -274,10 +274,6 @@ definitions:
   WarStatus:
     type: object
     properties:
-      statusCode:
-        type: integer
-      clanTag:
-        type: string
       enemyClanTag:
         type: string
       warState:
@@ -293,6 +289,10 @@ definitions:
           - WAR
           - IN_WAR
           - ENDED
+      statusCode:
+        type: integer
+      clanTag:
+        type: string
       timestamp:
         type: string
   LocationList:
@@ -451,10 +451,6 @@ definitions:
         $ref: '#/definitions/ClanMemberList'
       tag:
         type: string
-      requiredVersusTrophies:
-        type: integer
-      isWarLogPublic:
-        type: boolean
       warFrequency:
         type: string
         enum:
@@ -481,6 +477,12 @@ definitions:
         type: integer
       clanBuilderBasePoints:
         type: integer
+      isWarLogPublic:
+        type: boolean
+      chatLanguage:
+        $ref: '#/definitions/Language'
+      isFamilyFriendly:
+        type: boolean
       clanVersusPoints:
         type: integer
       clanCapitalPoints:
@@ -489,10 +491,8 @@ definitions:
         type: integer
       requiredBuilderBaseTrophies:
         type: integer
-      chatLanguage:
-        $ref: '#/definitions/Language'
-      isFamilyFriendly:
-        type: boolean
+      requiredVersusTrophies:
+        type: integer
       labels:
         $ref: '#/definitions/LabelList'
       name:
@@ -925,6 +925,7 @@ definitions:
         enum:
           - HOME_VILLAGE
           - BUILDER_BASE
+          - CLAN_CAPITAL
   PlayerItemLevelList:
     type: array
     items:
@@ -943,6 +944,7 @@ definitions:
         enum:
           - HOME_VILLAGE
           - BUILDER_BASE
+          - CLAN_CAPITAL
       superTroopIsActive:
         type: boolean
   PlayerLegendStatistics:
@@ -952,13 +954,13 @@ definitions:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
       currentSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
+      bestBuilderBaseSeason:
+        $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
       previousSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
       previousBuilderBaseSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
       previousVersusSeason:
-        $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
-      bestBuilderBaseSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
       bestVersusSeason:
         $ref: '#/definitions/LegendLeagueTournamentSeasonResult'
