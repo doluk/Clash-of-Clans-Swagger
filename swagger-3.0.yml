@@ -3055,13 +3055,16 @@ components:
         message:
           type: string
           readOnly: true
+          nullable: true
         type:
           type: string
           readOnly: true
+          nullable: true
         detail:
           type: object
           properties: {}
           readOnly: true
+          nullable: true
   responses:
     BadRequestSpec:
       description: Client provided incorrect parameters for the request.
