@@ -55,17 +55,17 @@ paths:
           type: string
       responses:
         400:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
         200:
           description: Successful response
           content:
@@ -88,17 +88,17 @@ paths:
           type: string
       responses:
         400:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
         200:
           description: Successful response
           content:
@@ -141,17 +141,17 @@ paths:
           type: string
       responses:
         400:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          $ref: '#/components/responses/ClientError'
-        42':
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
+        429:
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          $ref: '#/components/responses/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
         200:
           description: Successful response
           content:
@@ -186,43 +186,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClanWar'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /clans/{clanTag}/currentwar/leaguegroup:
     get:
       tags:
@@ -251,43 +225,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClanWarLeagueGroup'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /clans/{clanTag}:
     get:
       tags:
@@ -311,43 +259,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Clan'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /clans/{clanTag}/capitalraidseasons:
       get:
         tags:
@@ -387,43 +309,17 @@ paths:
                 schema:
                   $ref: '#/components/schemas/ClanCapitalRaidSeasons'
           400:
-            description: Client provided incorrect parameters for the request.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ClientError'
+            $ref: '#/components/responses/BadRequestSpec'
           403:
-            description: |
-              Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ClientError'
+            $ref: '#/components/responses/ForbiddenSpec'
           404:
-            description: Resource was not found.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ClientError'
+            $ref: '#/components/responses/NotFoundSpec'
           429:
-            description: |
-              Request was throttled, because amount of requests was above the threshold defined for the used API token.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ClientError'
+            $ref: '#/components/responses/RequestThrottledSpec'
           500:
-            description: Unknown error happened when handling the request.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ClientError'
+            $ref: '#/components/responses/UnknownExceptionSpec'
           503:
-            description: Service is temprorarily unavailable because of maintenance.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ClientError'
+            $ref: '#/components/responses/InMaintenanceSpec'
   /players/{playerTag}/verifytoken:
     post:
       tags:
@@ -454,43 +350,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/VerifyTokenResponse'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
       x-codegen-request-body-name: body
   /players/{playerTag}:
     get:
@@ -515,43 +385,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Player'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /builderbaseleagues/{leagueId}:
     get:
       tags:
@@ -574,43 +418,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/BuilderBaseLeague'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /locations/{locationId}/rankings/players-builder-base:
     get:
       tags:
@@ -650,43 +468,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/PlayerBuilderBaseRankingList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /locations/{locationId}/rankings/clans:
     get:
       tags:
@@ -726,43 +518,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClanRankingList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /clanwarleagues/wars/{warTag}:
     get:
       tags:
@@ -791,43 +557,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClanWar'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /builderbaseleagues:
     get:
       tags:
@@ -861,43 +601,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/BuilderBaseLeagueList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /leagues/{leagueId}:
     get:
       tags:
@@ -920,43 +634,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/League'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /goldpass/seasons/current:
     get:
       tags:
@@ -972,43 +660,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/GoldPassSeason'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /clans/{clanTag}/warlog:
     get:
       tags:
@@ -1048,43 +710,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClanWarLog'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /leagues:
     get:
       tags:
@@ -1118,43 +754,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LeagueList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /leagues/{leagueId}/seasons:
     get:
       tags:
@@ -1195,43 +805,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LeagueSeasonList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /locations/{locationId}/rankings/players:
     get:
       tags:
@@ -1271,43 +855,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/PlayerRankingList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /clans/{clanTag}/members:
     get:
       tags:
@@ -1348,43 +906,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClanMemberList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /locations:
     get:
       tags:
@@ -1418,43 +950,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LocationList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /labels/players:
     get:
       tags:
@@ -1488,43 +994,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LabelsObject'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /warleagues/{leagueId}:
     get:
       tags:
@@ -1547,43 +1027,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/WarLeague'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /leagues/{leagueId}/seasons/{seasonId}:
     get:
       tags:
@@ -1630,43 +1084,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/PlayerRankingList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /locations/{locationId}:
     get:
       tags:
@@ -1689,43 +1117,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Location'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /locations/{locationId}/rankings/clans-builder-base:
     get:
       tags:
@@ -1765,43 +1167,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClanBuilderBaseRankingList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /labels/clans:
     get:
       tags:
@@ -1835,43 +1211,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LabelsObject'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /clans:
     get:
       tags:
@@ -1948,43 +1298,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ClanList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /warleagues:
     get:
       tags:
@@ -2018,43 +1342,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/WarLeagueList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /api/login:
     servers:
       - url: https://developer.clashofclans.com/api/login
@@ -2079,43 +1377,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /apikey/list:
     servers:
       - url: https://developer.clashofclans.com/api/apikey/list
@@ -2134,43 +1406,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/KeyList'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /apikey/revoke:
     servers:
       - url: https://developer.clashofclans.com/api/apikey/revoke
@@ -2196,43 +1442,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/KeyInstance'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
   /apikey/create:
     servers:
       - url: https://developer.clashofclans.com/api/apikey/create
@@ -2258,43 +1478,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/KeyInstance'
         400:
-          description: Client provided incorrect parameters for the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/BadRequestSpec'
         403:
-          description: |
-            Access denied, either because of missing/incorrect credentials or used API token does not grant access to the requested resource.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/ForbiddenSpec'
         404:
-          description: Resource was not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/NotFoundSpec'
         429:
-          description: |
-            Request was throttled, because amount of requests was above the threshold defined for the used API token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/RequestThrottledSpec'
         500:
-          description: Unknown error happened when handling the request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/UnknownExceptionSpec'
         503:
-          description: Service is temprorarily unavailable because of maintenance.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientError'
+          $ref: '#/components/responses/InMaintenanceSpec'
 components:
   schemas:
     BadgeUrls:
