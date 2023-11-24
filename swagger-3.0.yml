@@ -2612,7 +2612,6 @@ components:
         - badgeUrls
         - clanLevel
         - destructionPercentage
-        - expEarned
         - members
         - name
         - stars
