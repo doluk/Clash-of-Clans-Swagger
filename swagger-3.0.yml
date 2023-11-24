@@ -1517,15 +1517,12 @@ components:
       type: object
       properties:
         small:
-          nullable: true
           type: string
           readOnly: true
         medium:
-          nullable: true
           type: string
           readOnly: true
         tiny:
-          nullable: true
           type: string
           readOnly: true
     RecruitingType:
@@ -1590,6 +1587,8 @@ components:
           items:
             $ref: '#/components/schemas/WarLeague'
           readOnly: true
+      required:
+        - items
     WarLeague:
       type: object
       properties:
@@ -1599,6 +1598,9 @@ components:
         id:
           type: integer
           readOnly: true
+      required:
+      - id
+      - name
     JsonLocalizedName:
       type: string
       readOnly: true
@@ -1610,6 +1612,8 @@ components:
           items:
             $ref: '#/components/schemas/ClanListEntry'
           readOnly: true
+      required:
+      - items
     ClanListEntry:
       type: object
       properties:
@@ -1630,7 +1634,6 @@ components:
           type: boolean
           readOnly: true
         warFrequency:
-          nullable: true
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/WarFrequency'
@@ -1646,16 +1649,13 @@ components:
         warTies:
           type: integer
           readOnly: true
-          nullable: true
         warLosses:
           type: integer
           readOnly: true
-          nullable: true
         clanPoints:
           type: integer
           readOnly: true
         chatLanguage:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Language'
           readOnly: true
@@ -1667,12 +1667,10 @@ components:
           type: string
           readOnly: true
         location:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Location'
           readOnly: true
         type:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/RecruitingType'
           readOnly: true
@@ -1683,6 +1681,20 @@ components:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
+      required:
+      - badgeUrls
+      - clanBuilderBasePoints
+      - clanLevel
+      - clanPoints
+      - isWarLogPublic
+      - labels
+      - members
+      - name
+      - requiredTrophies
+      - tag
+      - warLeague
+      - warWinStreak
+      - warWins
     Clan:
       type: object
       properties:
@@ -1710,7 +1722,6 @@ components:
           type: boolean
           readOnly: true
         warFrequency:
-          nullable: true
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/WarFrequency'
@@ -1726,16 +1737,13 @@ components:
         warTies:
           type: integer
           readOnly: true
-          nullable: true
         warLosses:
           type: integer
           readOnly: true
-          nullable: true
         clanPoints:
           type: integer
           readOnly: true
         chatLanguage:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Language'
           readOnly: true
@@ -1747,12 +1755,10 @@ components:
           type: string
           readOnly: true
         location:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Location'
           readOnly: true
         type:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/RecruitingType'
           readOnly: true
@@ -1772,21 +1778,44 @@ components:
           readOnly: true
         capitalLeague:
           allOf:
-          - $ref: '#/definitions/CapitalLeague'
+          - $ref: '#/components/schemas/CapitalLeague'
           readOnly: true
         isFamilyFriendly:
           type: boolean
           readOnly: true
+      required:
+        - badgeUrls
+        - capitalLeague
+        - clanBuilderBasePoints
+        - clanCapital
+        - clanLevel
+        - clanPoints
+        - description
+        - isFamilyFriendly
+        - isWarLogPublic
+        - labels
+        - memberList
+        - members
+        - name
+        - requiredBuilderBaseTrophies
+        - requiredTrophies
+        - tag
+        - warLeague
+        - warWinStreak
+        - warWins
     CapitalLeague:
       type: object
       properties:
         name:
           allOf:
-          - $ref: '#/definitions/JsonLocalizedName'
+          - $ref: '#/components/schemas/JsonLocalizedName'
           readOnly: true
         id:
           type: integer
           readOnly: true
+      required:
+        - name
+        - id
     CapitalLeagueObject:
       type: object
       properties:
@@ -1795,17 +1824,17 @@ components:
           items:
             $ref: '#/components/schemas/CapitalLeague'
           readOnly: true
+      required:
+        - items
     ClanCapital:
       type: object
       properties:
         capitalHallLevel:
           type: integer
-          nullable: true
           readOnly: true
         districts:
           allOf:
           - $ref: '#/components/schemas/ClanDistrictDataList'
-          nullable: true
           readOnly: true
     ClanCapitalRaidSeasons:
       type: object
@@ -1815,6 +1844,8 @@ components:
           items:
             $ref: '#/components/schemas/ClanCapitalRaidSeason'
           readOnly: true
+      required:
+      - items
     ClanCapitalRaidSeason:
       type: object
       properties:
@@ -1860,10 +1891,21 @@ components:
           type: integer
           readOnly: true
         members:
-          nullable: true
           readOnly: true
           allOf:
             - $ref: '#/components/schemas/ClanCapitalRaidSeasonMemberList'
+      required:
+      - attackLog
+      - capitalTotalLoot
+      - defenseLog
+      - defensiveReward
+      - endTime
+      - enemyDistrictsDestroyed
+      - offensiveReward
+      - raidsCompleted
+      - startTime
+      - state
+      - totalAttacks
     ClanCapitalRaidSeasonMemberList:
       type: array
       items:
@@ -1889,6 +1931,13 @@ components:
         capitalResourcesLooted:
           type: integer
           readOnly: true
+      required:
+      - attackLimit
+      - attacks
+      - bonusAttackLimit
+      - capitalResourcesLooted
+      - name
+      - tag
     ClanCapitalRaidSeasonDefenseLogList:
       type: array
       items:
@@ -1913,6 +1962,12 @@ components:
           readOnly: true
           allOf:
             - $ref: '#/components/schemas/ClanCapitalRaidSeasonDistrictList'
+      required:
+      - attackCount
+      - attacker
+      - districtCount
+      - districts
+      - districtsDestroyed
     ClanCapitalRaidSeasonDistrictList:
       type: array
       items:
@@ -1940,13 +1995,20 @@ components:
           type: integer
           readOnly: true
         attacks:
-          nullable: true
           readOnly: true
           allOf:
             - $ref: '#/components/schemas/ClanCapitalRaidSeasonAttackList'
         districtHallLevel:
           type: integer
           readOnly: true
+      required:
+      - attackCount
+      - destructionPercent
+      - districtHallLevel
+      - id
+      - name
+      - stars
+      - totalLooted
     ClanCapitalRaidSeasonAttackList:
       type: array
       items:
@@ -1956,12 +2018,14 @@ components:
       properties:
         items:
           allOf:
-          - $ref: '#/definitions/ClanCapitalRankingList'
+          - $ref: '#/components/schemas/ClanCapitalRankingList'
           readOnly: true
+      required:
+      - items
     ClanCapitalRankingList:
       type: array
       items:
-        $ref: '#/definitions/ClanCapitalRanking'
+        $ref: '#/components/schemas/ClanCapitalRanking'
     ClanCapitalRanking:
       type: object
       properties:
@@ -1975,7 +2039,6 @@ components:
           type: string
           readOnly: true
         location:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Location'
           readOnly: true
@@ -1995,6 +2058,15 @@ components:
         previousRank:
           type: integer
           readOnly: true
+      required:
+      - badgeUrls
+      - clanCapitalPoints
+      - clanLevel
+      - members
+      - name
+      - previousRank
+      - rank
+      - tag
     ClanCapitalRaidSeasonAttack:
       type: object
       properties:
@@ -2008,6 +2080,10 @@ components:
         stars:
           type: integer
           readOnly: true
+      required:
+      - attacker
+      - destructionPercent
+      - stars
     ClanCapitalRaidSeasonAttacker:
       type: object
       properties:
@@ -2017,6 +2093,9 @@ components:
         name:
           type: string
           readOnly: true
+      required:
+      - name
+      - tag
     ClanCapitalRaidSeasonClanInfo:
       type: object
       properties:
@@ -2033,6 +2112,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
+      required:
+      - badgeUrls
+      - level
+      - name
+      - tag
     ClanCapitalRaidSeasonAttackLogList:
       type: array
       items:
@@ -2057,6 +2141,12 @@ components:
           readOnly: true
           allOf:
             - $ref: '#/components/schemas/ClanCapitalRaidSeasonDistrictList'
+      required:
+      - attackCount
+      - defender
+      - districtCount
+      - districts
+      - districtsDestroyed
     ClanDistrictDataList:
       type: array
       items:
@@ -2073,6 +2163,10 @@ components:
         districtHallLevel:
           type: integer
           readOnly: true
+      required:
+      - districtHallLevel
+      - id
+      - name
     Language:
       type: object
       properties:
@@ -2085,11 +2179,14 @@ components:
         languageCode:
           type: string
           readOnly: true
+      required:
+      - id
+      - languageCode
+      - name
     Location:
       type: object
       properties:
         localizedName:
-          nullable: true
           type: string
           readOnly: true
         id:
@@ -2102,9 +2199,12 @@ components:
           type: boolean
           readOnly: true
         countryCode:
-          nullable: true
           type: string
           readOnly: true
+      required:
+      - id
+      - isCountry
+      - name
     LabelsObject:
       type: object
       properties:
@@ -2113,6 +2213,8 @@ components:
           items:
             $ref: '#/components/schemas/Label'
           readOnly: true
+      required:
+      - items
     LabelList:
       type: array
       items:
@@ -2131,6 +2233,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/IconUrls'
           readOnly: true
+      required:
+      - iconUrls
+      - id
+      - name
     ClanMemberList:
       type: array
       items:
@@ -2146,7 +2252,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/BuilderBaseLeague'
           readOnly: true
-          nullable: true
         tag:
           type: string
           readOnly: true
@@ -2154,7 +2259,6 @@ components:
           type: string
           readOnly: true
         role:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Role'
           readOnly: true
@@ -2181,20 +2285,32 @@ components:
           readOnly: true
         playerHouse:
           allOf:
-          - $ref: '#/definitions/PlayerHouse'
+          - $ref: '#/components/schemas/PlayerHouse'
           readOnly: true
-          nullable: true
+      required:
+      - builderBaseTrophies
+      - clanRank
+      - donations
+      - donationsReceived
+      - expLevel
+      - league
+      - name
+      - previousClanRank
+      - tag
+      - trophies
     PlayerHouse:
       type: object
       properties:
         elements:
           allOf:
-          - $ref: '#/definitions/PlayerHouseElementList'
+          - $ref: '#/components/schemas/PlayerHouseElementList'
           readOnly: true
+      required:
+      - elements
     PlayerHouseElementList:
       type: array
       items:
-        $ref: '#/definitions/PlayerHouseElement'
+        $ref: '#/components/schemas/PlayerHouseElement'
     PlayerHouseElement:
       type: object
       properties:
@@ -2211,6 +2327,9 @@ components:
             - foot
             - decoration
             - walls
+      required:
+      - id
+      - type
     BuilderBaseLeague:
       type: object
       properties:
@@ -2221,6 +2340,9 @@ components:
         id:
           type: integer
           readOnly: true
+      required:
+      - name
+      - id
     League:
       type: object
       properties:
@@ -2235,6 +2357,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/IconUrls'
           readOnly: true
+      required:
+      - iconUrls
+      - id
+      - name
     ClanBuilderBaseRankingList:
       type: object
       properties:
@@ -2243,12 +2369,16 @@ components:
           items:
             $ref: '#/components/schemas/ClanBuilderBaseRanking'
           readOnly: true
+      required:
+      - items
     ClanBuilderBaseRanking:
       type: object
       properties:
         clanBuilderBasePoints:
           type: integer
           readOnly: true
+      required:
+      - clanBuilderBasePoints
     PlayerRankingList:
       type: object
       properties:
@@ -2257,11 +2387,12 @@ components:
           items:
             $ref: '#/components/schemas/PlayerRanking'
           readOnly: true
+      required:
+      - items
     PlayerRanking:
       type: object
       properties:
         clan:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/PlayerRankingClan'
           readOnly: true
@@ -2293,6 +2424,16 @@ components:
         trophies:
           type: integer
           readOnly: true
+      required:
+      - attackWins
+      - defenseWins
+      - expLevel
+      - league
+      - name
+      - previousRank
+      - rank
+      - tag
+      - trophies
     PlayerRankingClan:
       type: object
       properties:
@@ -2306,6 +2447,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
+      required:
+      - badgeUrls
+      - name
+      - tag
     LocationList:
       type: object
       properties:
@@ -2314,6 +2459,8 @@ components:
           items:
             $ref: '#/components/schemas/Location'
           readOnly: true
+      required:
+      - items
     LeagueSeasonList:
       type: object
       properties:
@@ -2322,12 +2469,16 @@ components:
           items:
             $ref: '#/components/schemas/LeagueSeason'
           readOnly: true
+      required:
+        - items
     LeagueSeason:
       type: object
       properties:
         id:
           type: string
           readOnly: true
+      required:
+      - id
     LeagueList:
       type: object
       properties:
@@ -2336,6 +2487,8 @@ components:
           items:
             $ref: '#/components/schemas/League'
           readOnly: true
+      required:
+      - items
     ClanWarLog:
       type: object
       properties:
@@ -2344,6 +2497,8 @@ components:
           items:
             $ref: '#/components/schemas/ClanWarLogEntry'
           readOnly: true
+      required:
+      - items
     ClanWarLogEntry:
       type: object
       properties:
@@ -2357,7 +2512,6 @@ components:
         attacksPerMember:
           type: integer
           readOnly: true
-          nullable: true
         opponent:
           allOf:
           - $ref: '#/components/schemas/WarClanLogEntry'
@@ -2367,10 +2521,14 @@ components:
           format: date-time
           readOnly: true
         result:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Result'
           readOnly: true
+      required:
+      - clan
+      - endTime
+      - opponent
+      - teamSize
     GoldPassSeason:
       type: object
       properties:
@@ -2380,6 +2538,9 @@ components:
         endTime:
           type: string
           readOnly: true
+      required:
+      - endTime
+      - startTime
     WarClanLogEntry:
       type: object
       properties:
@@ -2390,11 +2551,9 @@ components:
         tag:
           type: string
           readOnly: true
-          nullable: true
         name:
           type: string
           readOnly: true
-          nullable: true
         badgeUrls:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
@@ -2405,14 +2564,17 @@ components:
         attacks:
           type: integer
           readOnly: true
-          nullable: true
         stars:
           type: integer
           readOnly: true
         expEarned:
           type: integer
           readOnly: true
-          nullable: true
+      required:
+      - badgeUrls
+      - clanLevel
+      - destructionPercentage
+      - stars
     WarClan:
       type: object
       properties:
@@ -2445,6 +2607,16 @@ components:
         members:
           $ref: '#/components/schemas/ClanWarMemberList'
           readOnly: true
+      required:
+        - attacks
+        - badgeUrls
+        - clanLevel
+        - destructionPercentage
+        - expEarned
+        - members
+        - name
+        - stars
+        - tag
     ClanWarMemberList:
       type: array
       items:
@@ -2469,15 +2641,19 @@ components:
           type: integer
           readOnly: true
         bestOpponentAttack:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/ClanWarAttack'
           readOnly: true
         attacks:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/ClanWarAttackList'
           readOnly: true
+      required:
+      - mapPosition
+      - name
+      - opponentAttacks
+      - tag
+      - townhallLevel
     ClanWarAttackList:
       type: array
       items:
@@ -2505,12 +2681,16 @@ components:
         duration:
           type: integer
           readOnly: true
-          nullable: true
+      required:
+      - attackerTag
+      - defenderTag
+      - destructionPercentage
+      - order
+      - stars
     ClanWarLeagueGroup:
       type: object
       properties:
         state:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/GroupState'
           readOnly: true
@@ -2525,6 +2705,10 @@ components:
         rounds:
           $ref: '#/components/schemas/ClanWarLeagueRoundList'
           readOnly: true
+      required:
+      - clans
+      - rounds
+      - season
     ClanWarLeagueRoundList:
       type: array
       items:
@@ -2535,7 +2719,9 @@ components:
       properties:
         warTags:
           $ref: '#/components/schemas/StringList'
-      readOnly: true
+          readOnly: true
+      required:
+      - warTags
     StringList:
       type: array
       items:
@@ -2570,6 +2756,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
+      required:
+      - badgeUrls
+      - clanLevel
+      - members
+      - name
+      - tag
     ClanWarLeagueClanMember:
       type: object
       properties:
@@ -2582,6 +2774,10 @@ components:
         name:
           readOnly: true
           type: string
+      required:
+      - name
+      - tag
+      - townHallLevel
     ClanRankingList:
       type: object
       properties:
@@ -2590,6 +2786,8 @@ components:
           items:
             $ref: '#/components/schemas/ClanRanking'
           readOnly: true
+      required:
+      - items
     ClanRanking:
       type: object
       properties:
@@ -2600,7 +2798,6 @@ components:
           type: integer
           readOnly: true
         location:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Location'
           readOnly: true
@@ -2623,6 +2820,15 @@ components:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
+      required:
+      - badgeUrls
+      - clanLevel
+      - clanPoints
+      - members
+      - name
+      - previousRank
+      - rank
+      - tag
     BuilderBaseLeagueList:
       type: object
       properties:
@@ -2631,6 +2837,8 @@ components:
           items:
             $ref: '#/components/schemas/BuilderBaseLeague'
           readOnly: true
+      required:
+        - items
     PlayerBuilderBaseRankingList:
       type: object
       properties:
@@ -2639,6 +2847,8 @@ components:
           items:
             $ref: '#/components/schemas/PlayerBuilderBaseRanking'
           readOnly: true
+      required:
+      - items
     PlayerBuilderBaseRanking:
       type: object
       properties:
@@ -2647,7 +2857,6 @@ components:
           - $ref: '#/components/schemas/BuilderBaseLeague'
           readOnly: true
         clan:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/PlayerRankingClan'
           readOnly: true
@@ -2669,31 +2878,34 @@ components:
         builderBaseTrophies:
           type: integer
           readOnly: true
+      required:
+      - builderBaseLeague
+      - builderBaseTrophies
+      - expLevel
+      - name
+      - previousRank
+      - rank
+      - tag
     Player:
       type: object
       properties:
         clan:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/PlayerClan'
           readOnly: true
         league:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/League'
           readOnly: true
         builderBaseLeague:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/BuilderBaseLeague'
           readOnly: true
         role:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Role'
           readOnly: true
         warPreference:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/WarPreference'
           readOnly: true
@@ -2709,9 +2921,7 @@ components:
         townHallWeaponLevel:
           type: integer
           readOnly: true
-          nullable: true
         legendStatistics:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/PlayerLegendStatistics'
           readOnly: true
@@ -2755,7 +2965,6 @@ components:
         builderHallLevel:
           type: integer
           readOnly: true
-          nullable: true
         builderBaseTrophies:
           type: integer
           readOnly: true
@@ -2775,12 +2984,31 @@ components:
         versusBattleWinCount:
           type: integer
           readOnly: true
-          nullable: true
         playerHouse:
           allOf:
-          - $ref: '#/definitions/PlayerHouse'
+          - $ref: '#/components/schemas/PlayerHouse'
           readOnly: true
-          nullable: true
+      required:
+      - achievements
+      - attackWins
+      - bestTrophies
+      - bestVersusSeason
+      - builderBaseTrophies
+      - clanCapitalContributions
+      - defenseWins
+      - donations
+      - donationsReceived
+      - expLevel
+      - heroes
+      - labels
+      - name
+      - spells
+      - tag
+      - townHallLevel
+      - troops
+      - trophies
+      - warStars
+      - bestVersusTrophies
     PlayerAchievementProgressList:
       type: array
       items:
@@ -2814,6 +3042,14 @@ components:
           readOnly: true
           allOf:
           - $ref: '#/components/schemas/VillageType'
+      required:
+      - completionInfo
+      - info
+      - name
+      - stars
+      - target
+      - value
+      - village
     PlayerItemLevelList:
       type: array
       items:
@@ -2838,8 +3074,12 @@ components:
           - $ref: '#/components/schemas/VillageType'
         superTroopIsActive:
           type: boolean
-          nullable: true
           readOnly: true
+      required:
+        - level
+        - maxLevel
+        - name
+        - village
     PlayerLegendStatistics:
       type: object
       properties:
@@ -2848,12 +3088,10 @@ components:
           - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
           readOnly: true
         previousBuilderBaseSeason:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
           readOnly: true
         bestBuilderBaseSeason:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
           readOnly: true
@@ -2861,15 +3099,16 @@ components:
           type: integer
           readOnly: true
         previousSeason:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
           readOnly: true
         bestSeason:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/LegendLeagueTournamentSeasonResult'
           readOnly: true
+      required:
+      - currentSeason
+      - legendTrophies
     LegendLeagueTournamentSeasonResult:
       type: object
       properties:
@@ -2881,11 +3120,11 @@ components:
           format: date
           example: 2023-01
           readOnly: true
-          nullable: true
         rank:
           type: integer
           readOnly: true
-          nullable: true
+      required:
+      - trophies
     PlayerClan:
       type: object
       properties:
@@ -2902,11 +3141,18 @@ components:
           allOf:
           - $ref: '#/components/schemas/BadgeUrls'
           readOnly: true
+      required:
+      - badgeUrls
+      - clanLevel
+      - name
+      - tag
     VerifyTokenRequest:
       type: object
       properties:
         token:
           type: string
+      required:
+      - token
     VerifyTokenResponse:
       type: object
       properties:
@@ -2919,6 +3165,10 @@ components:
         status:
           type: string
           readOnly: true
+      required:
+      - status
+      - tag
+      - token
     LoginCredentials:
       type: object
       properties:
@@ -2926,6 +3176,9 @@ components:
           type: string
         password:
           type: string
+      required:
+        - email
+        - password
     LoginResponse:
       type: object
       properties:
@@ -2933,6 +3186,9 @@ components:
           type: string
         sessionExpiresInSeconds:
           type: integer
+      required:
+        - sessionExpiresInSeconds
+        - temporaryAPIToken
     KeyList:
       type: object
       properties:
@@ -2945,13 +3201,19 @@ components:
               type: string
             detail:
               type: string
-              nullable: true
+          required:
+            - code
+            - message
         sessionExpiresInSeconds:
           type: integer
         keys:
           type: array
           items:
             $ref: '#/components/schemas/Key'
+      required:
+      - keys
+      - sessionExpiresInSeconds
+      - status
     KeyInstance:
       type: object
       properties:
@@ -2968,9 +3230,11 @@ components:
         sessionExpiresInSeconds:
           type: integer
         key:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/Key'
+      required:
+      - sessionExpiresInSeconds
+      - status
     Key:
       type: object
       properties:
@@ -2996,11 +3260,19 @@ components:
         validUntil:
           type: string
           format: date-time
-          nullable: true
         cidrRanges:
           type: array
           items:
             type: string
+      required:
+      - cidrRanges
+      - description
+      - developerId
+      - key
+      - name
+      - scopes
+      - tier
+      - id
     CreateTokenRequest:
       type: object
       properties:
@@ -3012,6 +3284,10 @@ components:
           type: string
         description:
           type: string
+      required:
+      - cidrRanges
+      - description
+      - name
     ClanWar:
       type: object
       properties:
@@ -3034,7 +3310,6 @@ components:
           format: date-time
           readOnly: true
         state:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/WarState'
           readOnly: true
@@ -3046,6 +3321,14 @@ components:
           type: string
           format: date-time
           readOnly: true
+      required:
+      - attacksPerMember
+      - clan
+      - endTime
+      - opponent
+      - preparationStartTime
+      - startTime
+      - teamSize
     ClientError:
       type: object
       properties:
@@ -3055,16 +3338,15 @@ components:
         message:
           type: string
           readOnly: true
-          nullable: true
         type:
           type: string
           readOnly: true
-          nullable: true
         detail:
           type: object
           properties: {}
           readOnly: true
-          nullable: true
+      required:
+      - reason
   responses:
     BadRequestSpec:
       description: Client provided incorrect parameters for the request.
