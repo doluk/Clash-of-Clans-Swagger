@@ -1376,6 +1376,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: session=abcde12345; Path=/; Expires=Fri, 24 Nov 2023 23:18:18 GMT; HttpOnly; Secure
         400:
           $ref: '#/components/responses/BadRequestSpec'
         403:
