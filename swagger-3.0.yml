@@ -433,8 +433,8 @@ paths:
     get:
       tags:
       - locations
-      summary: Get player versus rankings for a specific location
-      description: Get player versus rankings for a specific location
+      summary: Get player Builder Base rankings for a specific location
+      description: Get player Builder Base rankings for a specific location
       operationId: getPlayerBuilderBaseRanking
       parameters:
       - name: locationId
@@ -1132,8 +1132,8 @@ paths:
     get:
       tags:
       - locations
-      summary: Get clan versus rankings for a specific location
-      description: Get clan versus rankings for a specific location
+      summary: Get clan Builder Base rankings for a specific location
+      description: Get clan Builder Base rankings for a specific location
       operationId: getClanBuilderBaseRanking
       parameters:
       - name: locationId
@@ -2292,6 +2292,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/PlayerHouse'
           readOnly: true
+        townHallLevel:
+          type: integer
+          readOnly: true
       required:
       - builderBaseTrophies
       - clanRank
@@ -2303,6 +2306,7 @@ components:
       - previousClanRank
       - tag
       - trophies
+      - townHallLevel
     PlayerHouse:
       type: object
       properties:
@@ -2937,6 +2941,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/PlayerItemLevelList'
           readOnly: true
+        heroEquipment:
+          allOf:
+          - $ref: '#/components/schemas/PlayerItemLevelList'
+          readOnly: true
         spells:
           allOf:
           - $ref: '#/components/schemas/PlayerItemLevelList'
@@ -2972,9 +2980,6 @@ components:
         builderBaseTrophies:
           type: integer
           readOnly: true
-        bestVersusTrophies:
-          type: integer
-          readOnly: true
         warStars:
           type: integer
           readOnly: true
@@ -2985,9 +2990,6 @@ components:
         clanCapitalContributions:
           type: integer
           readOnly: true
-        versusBattleWinCount:
-          type: integer
-          readOnly: true
         playerHouse:
           allOf:
           - $ref: '#/components/schemas/PlayerHouse'
@@ -2996,9 +2998,7 @@ components:
       - achievements
       - attackWins
       - bestTrophies
-      - bestVersusSeason
       - builderBaseTrophies
-      - clanCapitalContributions
       - defenseWins
       - donations
       - donationsReceived
@@ -3012,7 +3012,6 @@ components:
       - troops
       - trophies
       - warStars
-      - bestVersusTrophies
     PlayerAchievementProgressList:
       type: array
       items:
@@ -3079,6 +3078,9 @@ components:
         superTroopIsActive:
           type: boolean
           readOnly: true
+        equipment:
+          $ref: '#/components/schemas/PlayerItemLevelList'
+          readonly: true
       required:
         - level
         - maxLevel
