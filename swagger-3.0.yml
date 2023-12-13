@@ -2306,7 +2306,6 @@ components:
       - previousClanRank
       - tag
       - trophies
-      - townHallLevel
     PlayerHouse:
       type: object
       properties:
